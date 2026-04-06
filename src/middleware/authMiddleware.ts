@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+
 interface AuthRequest extends Request {
   user?: any;
 }
 
-export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -18,9 +19,6 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
 
   try {
     const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
-    
-    // Database se user nikaal kar request mein daal dena
-    // Is se humein req.user.role aur req.user.id har jagah mil jayega
     req.user = await User.findById(decoded.id).select('-password');
     
     if (!req.user) {
@@ -33,7 +31,6 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
   }
 };
 
-// 2. Sirf Employer ke liye Access
 export const isEmployer = (req: AuthRequest, res: Response, next: NextFunction) => {
   if (req.user && req.user.role === 'employer') {
     next();
@@ -42,7 +39,6 @@ export const isEmployer = (req: AuthRequest, res: Response, next: NextFunction) 
   }
 };
 
-// 3. Sirf Job Seeker ke liye Access
 export const isJobSeeker = (req: AuthRequest, res: Response, next: NextFunction) => {
   if (req.user && req.user.role === 'jobseeker') {
     next();
