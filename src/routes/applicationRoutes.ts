@@ -7,14 +7,14 @@ import {
 } from '../controllers/applicationController.js';
 
 import { getEmployerStats } from '../controllers/employerdashboardController.js'; 
-import { protect, isEmployer, isJobSeeker } from '../middleware/authMiddleware.js';
+import { authMiddleware, isEmployer, isJobSeeker } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/apply', protect, isJobSeeker, applyToJob);
-router.get('/my-applications', protect, isJobSeeker, getMyApplications);
-router.get('/job/:jobId', protect, isEmployer, getJobApplicants);
-router.patch('/status/:id', protect, isEmployer, updateApplicationStatus);
-router.get('/employer-stats', protect, isEmployer, getEmployerStats); 
+router.post('/apply', authMiddleware, isJobSeeker, applyToJob);
+router.get('/my-applications', authMiddleware, isJobSeeker, getMyApplications);
+router.get('/job/:jobId', authMiddleware, isEmployer, getJobApplicants);
+router.patch('/status/:id', authMiddleware, isEmployer, updateApplicationStatus);
+router.get('/employer-stats', authMiddleware, isEmployer, getEmployerStats); 
 
 export default router;
