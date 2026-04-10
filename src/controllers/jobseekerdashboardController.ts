@@ -1,27 +1,27 @@
-import { Request, Response } from 'express';
-import {Application} from '../models/Application.js';
-import  User from '../models/User.js';
+import { Response } from 'express';
+import { Application } from '../models/Application.js';
+import User from '../models/User.js';
 
 export const getJobSeekerStats = async (req: any, res: Response) => {
-    const userId = req.user.id;
-    try {
-        const totalApps = await Application.countDocuments({ applicant: userId });
-        const shortlisted = await Application.countDocuments({ applicant: userId, status: 'shortlisted' });
-        
-        const foundUser = await User.findById(userId);
-        const savedJobsCount = foundUser?.savedJobs?.length || 0;
+  try {
+    const userId = req.user._id;
 
-        const recentApps = await Application.find({ applicant: userId })
-            .populate('job')
-            .limit(5);
+    const [totalApplications, shortlisted, foundUser, recentApplications] = await Promise.all([
+      Application.countDocuments({ applicant: userId }),
+      Application.countDocuments({ applicant: userId, status: 'shortlisted' }),
+      User.findById(userId).select('name email'),
+      Application.find({ applicant: userId }).sort({ createdAt: -1 }).limit(5)
+    ]);
 
-        return res.status(200).json({
-            totalApplications: totalApps,
-            shortlisted: shortlisted,
-            savedJobs: savedJobsCount,
-            recentApplications: recentApps
-        });
-    } catch (error) {
-        return res.status(500).json({ message: "Error", error });
-    }
+    res.status(200).json({
+      success: true,
+      user: { name: foundUser?.name || "Candidate" },
+      totalApplications,
+      shortlisted,
+      savedJobs: 0,
+      recentApplications
+    });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
