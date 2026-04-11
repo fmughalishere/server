@@ -1,11 +1,12 @@
 import express from 'express';
-import { applyToJob } from '../controllers/applicationController.js';
-import { getJobSeekerStats } from '../controllers/jobseekerdashboardController.js'; 
-import { authMiddleware, isJobSeeker } from '../middleware/authMiddleware.js';
-
 const router = express.Router();
+import { getMyApplications,getJobseekerStats } from '../controllers/applicationController.js';
+import { getEmployerApplicants, updateApplicationStatus } from '../controllers/applicationController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
-router.post('/apply', authMiddleware, isJobSeeker, applyToJob);
-router.get('/jobseeker-stats', authMiddleware, isJobSeeker, getJobSeekerStats);
+router.get('/employer/all-applicants', protect, getEmployerApplicants);
+router.put('/status/:id', protect, updateApplicationStatus);
+router.get('/jobseeker-stats', protect, getJobseekerStats);
+router.get('/my-applications', protect, getMyApplications);
 
 export default router;

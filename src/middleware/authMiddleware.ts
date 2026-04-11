@@ -46,3 +46,22 @@ export const isJobSeeker = (req: AuthRequest, res: Response, next: NextFunction)
     res.status(403).json({ message: 'Access denied. Only Job Seekers can access this.' });
   }
 };
+
+export const protect = async (req: any, res: any, next: any) => {
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
+      const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
+            req.user = await User.findById(decoded.id).select("-password");
+      
+      next();
+    } catch (error) {
+      res.status(401).json({ message: "Not authorized, token failed" });
+    }
+  }
+
+  if (!token) {
+    res.status(401).json({ message: "Not authorized, no token" });
+  }
+};

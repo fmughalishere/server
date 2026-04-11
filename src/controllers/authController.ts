@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import Job from '../models/Job.js';
 
 export const register = async (req: Request, res: Response) => {
   const { name, email, password, role } = req.body;
@@ -32,4 +33,18 @@ export const login = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }
+};
+
+export const getSavedJobs = async (req: any, res: Response) => {
+    try {
+        const user = await User.findById(req.user.id).populate('savedJobs');
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user.savedJobs);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching saved jobs" });
+    }
 };

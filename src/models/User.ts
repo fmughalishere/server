@@ -9,10 +9,7 @@ const userSchema = new mongoose.Schema({
     enum: ['jobseeker', 'employer'], 
     default: 'jobseeker' 
   },
-  savedJobs: [{ 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Job' 
-  }],
+  savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }] ,
   profile: {
     resume: { type: String, default: null },
     bio: { type: String, default: null },
