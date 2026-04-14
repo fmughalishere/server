@@ -66,3 +66,40 @@ export const getMyApplications = async (req: any, res: Response) => {
         res.status(500).json({ message: "Error fetching your applications" });
     }
 };
+
+export const createApplication = async (req: any, res: any) => {
+  try {
+    const { 
+      fullName, dob, gender, city, email, phone, whatsapp, 
+      category, jobtype, education, isFresher, experienceData, 
+      achievements, image, emailPrivacy, phonePrivacy, whatsappPrivacy 
+    } = req.body;
+
+    const newApplication = new Application({
+      applicant: req.user._id, // Logged in user ki ID
+      fullName,
+      dob,
+      gender,
+      city,
+      email,
+      emailPrivacy,
+      phone,
+      phonePrivacy,
+      whatsapp,
+      whatsappPrivacy,
+      category,
+      jobtype,
+      education,
+      isFresher,
+      experience: isFresher ? [] : experienceData, // Map experience data
+      achievements,
+      image,
+      status: 'pending'
+    });
+
+    await newApplication.save();
+    res.status(201).json({ message: "Application submitted successfully", data: newApplication });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
