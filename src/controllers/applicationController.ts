@@ -110,3 +110,17 @@ export const createApplication = async (req: any, res: any) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getSingleApplication = async (req: any, res: any) => {
+  try {
+    const app = await Application.findById(req.params.id)
+      .populate("applicant", "name email")
+      .populate("job", "title");
+
+    if (!app) return res.status(404).json({ message: "Not found" });
+
+    res.json(app);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching application" });
+  }
+};
