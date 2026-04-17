@@ -9,10 +9,8 @@ const experienceSchema = new mongoose.Schema({
 });
 
 const applicationSchema = new mongoose.Schema({
-
   applicant: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  employer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job' },
+  employer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Ab ye directly employer se connect hoga
   image: { type: String },
   fullName: { type: String, required: true },
   dob: { type: Date },
@@ -35,7 +33,7 @@ const applicationSchema = new mongoose.Schema({
   coverLetter: { type: String },
   status: {
     type: String,
-    enum: ['pending', 'shortlisted', 'rejected', 'interviewing'],
+    enum: ['pending', 'shortlisted', 'rejected', 'interviewing', 'Offered'],
     default: 'pending'
   }
 }, { timestamps: true });

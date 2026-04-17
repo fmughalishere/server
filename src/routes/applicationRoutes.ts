@@ -1,7 +1,13 @@
 import express from 'express';
 const router = express.Router();
-import { createApplication, getMyApplications,getJobseekerStats, getSingleApplication } from '../controllers/applicationController.js';
-import { getEmployerApplicants, updateApplicationStatus } from '../controllers/applicationController.js';
+import { 
+    createApplication, 
+    getMyApplications, 
+    getJobseekerStats, 
+    getSingleApplication, 
+    getEmployerApplicants, 
+    updateApplicationStatus 
+} from '../controllers/applicationController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 router.post('/', protect, createApplication); 

@@ -2,9 +2,23 @@ import { Request, Response } from 'express';
 import Job from '../models/Job.js';
 import { Application } from '../models/Application.js';
 
-export const getEmployerStats = async (req: any, res: Response) => {
+interface AuthRequest extends Request {
+    user?: {
+        _id?: string;
+        id?: string;
+    };
+}
+
+export const getEmployerStats = async (req: AuthRequest, res: Response) => {
     try {
-        const employerId = req.user.id;
+        const employerId = req.user?._id || req.user?.id;
+
+        if (!employerId) {
+            return res.status(401).json({
+                message: "User not authenticated or ID missing"
+            });
+        }
+
         const totalJobs = await Job.countDocuments({
             postedBy: employerId
         });
@@ -42,10 +56,17 @@ export const getEmployerStats = async (req: any, res: Response) => {
         });
 
     } catch (error) {
-        console.error("Employer Stats Error:", error);
+        console.error("Employer Stats Error Detail:", error);
+
+        let errorMessage = "Unknown error";
+
+        if (error instanceof Error) {
+            errorMessage = error.message;
+        }
+
         return res.status(500).json({
             message: "Error fetching stats",
-            error
+            error: errorMessage
         });
     }
 };
