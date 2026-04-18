@@ -10,7 +10,7 @@ const experienceSchema = new mongoose.Schema({
 
 const applicationSchema = new mongoose.Schema({
   applicant: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  employer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Ab ye directly employer se connect hoga
+  employer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   image: { type: String },
   fullName: { type: String, required: true },
   dob: { type: Date },
