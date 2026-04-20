@@ -23,7 +23,12 @@ const io = new Server(server, {
   }
 });
 
-app.use(cors());
+app.use(cors(
+  {
+  origin: 'https://easyjobspk.vercel.app',
+  credentials: true
+}
+));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
