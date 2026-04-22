@@ -1,13 +1,9 @@
-import Job from '../models/Job.js';
 import { Application } from '../models/Application.js';
 export const getEmployerApplicants = async (req, res) => {
     try {
         const employerId = req.user.id;
-        const myJobs = await Job.find({ postedBy: employerId }).select('_id');
-        const jobIds = myJobs.map((job) => job._id);
-        const applicants = await Application.find({ job: { $in: jobIds } })
+        const applicants = await Application.find({ employer: employerId })
             .populate('applicant', 'name email')
-            .populate('job', 'title')
             .sort({ createdAt: -1 });
         res.status(200).json(applicants);
     }
@@ -19,7 +15,8 @@ export const updateApplicationStatus = async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
-        const application = await Application.findByIdAndUpdate(id, { status }, { new: true });
+        const application = await Application.findByIdAndUpdate(id, { status }, { new: true })
+            .populate('employer', 'name email phone');
         res.status(200).json(application);
     }
     catch (error) {
@@ -32,9 +29,9 @@ export const getJobseekerStats = async (req, res) => {
         const totalApplications = await Application.countDocuments({ applicant: userId });
         const shortlisted = await Application.countDocuments({ applicant: userId, status: 'shortlisted' });
         const recentApplications = await Application.find({ applicant: userId })
-            .populate('job', 'title city')
+            .populate('employer', 'name email phone')
             .sort({ createdAt: -1 })
-            .limit(5);
+            .limit(10);
         res.status(200).json({
             user: req.user,
             totalApplications,
@@ -50,10 +47,7 @@ export const getMyApplications = async (req, res) => {
     try {
         const userId = req.user.id;
         const applications = await Application.find({ applicant: userId })
-            .populate({
-            path: 'job',
-            select: 'title company city salary type'
-        })
+            .populate('employer', 'name email phone')
             .sort({ createdAt: -1 });
         res.status(200).json(applications);
     }
@@ -63,40 +57,39 @@ export const getMyApplications = async (req, res) => {
 };
 export const createApplication = async (req, res) => {
     try {
-        const { jobId, fullName, dob, gender, city, email, phone, whatsapp, category, jobtype, education, isFresher, experienceData, achievements, image, emailPrivacy, phonePrivacy, whatsappPrivacy } = req.body;
-        const jobDetails = await Job.findById(jobId);
-        if (!jobDetails) {
-            return res.status(404).json({ message: "Job not found" });
-        }
-        const newApplication = new Application({
-            applicant: req.user.id,
-            employer: jobDetails.postedBy,
-            job: jobId,
+        const { fullName, dob, gender, city, image, jobtype, category, education, isFresher, experience, achievements } = req.body;
+        const application = new Application({
+            applicant: req.user._id,
             fullName,
             dob,
             gender,
             city,
-            email,
-            emailPrivacy,
-            phone,
-            phonePrivacy,
-            whatsapp,
-            whatsappPrivacy,
-            category,
+            image,
             jobtype,
+            category,
             education,
             isFresher,
-            experience: isFresher ? [] : experienceData,
-            achievements,
-            image,
-            status: 'pending'
+            experience,
+            achievements
         });
-        await newApplication.save();
-        res.status(201).json({ message: "Application submitted successfully", data: newApplication });
+        const createdApplication = await application.save();
+        res.status(201).json(createdApplication);
     }
     catch (error) {
-        console.error("Create App Error:", error);
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message || "Failed to create application" });
+    }
+};
+export const getSingleApplication = async (req, res) => {
+    try {
+        const app = await Application.findById(req.params.id)
+            .populate("applicant", "name email")
+            .populate("employer", "name email phone");
+        if (!app)
+            return res.status(404).json({ message: "Not found" });
+        res.json(app);
+    }
+    catch (err) {
+        res.status(500).json({ message: "Error fetching application" });
     }
 };
 //# sourceMappingURL=applicationController.js.map

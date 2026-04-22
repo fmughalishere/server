@@ -1,5 +1,18 @@
 import Job from '../models/Job.js';
 import User from '../models/User.js';
+export const getJobById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const job = await Job.findById(id).populate('postedBy', 'name companyName email');
+        if (!job) {
+            return res.status(404).json({ message: 'Job not found' });
+        }
+        res.status(200).json(job);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error fetching job details', error: error.message });
+    }
+};
 export const postJob = async (req, res) => {
     try {
         const { title, description, city, salary, type, category, skills, experience } = req.body;
@@ -23,11 +36,7 @@ export const postJob = async (req, res) => {
         });
     }
     catch (error) {
-        console.error("Post Job Error Detail:", error);
-        res.status(500).json({
-            message: 'Error posting job',
-            error: error.message
-        });
+        res.status(500).json({ message: 'Error posting job', error: error.message });
     }
 };
 export const getAllJobs = async (req, res) => {
@@ -53,29 +62,22 @@ export const getAllJobs = async (req, res) => {
 };
 export const getMyJobs = async (req, res) => {
     try {
-        console.log("Logged in User ID:", req.user?.id);
         if (!req.user || !req.user.id) {
             return res.status(401).json({ message: "User not authenticated" });
         }
         const jobs = await Job.find({ postedBy: req.user.id }).sort({ createdAt: -1 });
-        console.log("Jobs found:", jobs.length);
         res.status(200).json(jobs);
     }
     catch (error) {
-        console.error("GET MY JOBS ERROR:", error);
-        res.status(500).json({
-            message: "Error fetching your jobs",
-            error: error.message
-        });
+        res.status(500).json({ message: "Error fetching your jobs", error: error.message });
     }
 };
 export const toggleSaveJob = async (req, res) => {
     try {
         const { jobId } = req.params;
         const user = await User.findById(req.user.id);
-        if (!user) {
+        if (!user)
             return res.status(404).json({ message: "User not found" });
-        }
         if (user.savedJobs.includes(jobId)) {
             user.savedJobs = user.savedJobs.filter(id => id.toString() !== jobId);
             await user.save();
@@ -94,9 +96,8 @@ export const toggleSaveJob = async (req, res) => {
 export const getSavedJobs = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).populate('savedJobs');
-        if (!user) {
+        if (!user)
             return res.status(404).json({ message: "User not found" });
-        }
         res.status(200).json(user.savedJobs);
     }
     catch (error) {
