@@ -1,9 +1,7 @@
 import { Application } from '../models/Application.js';
 export const getEmployerApplicants = async (req, res) => {
     try {
-        const employerId = req.user.id;
-        const applicants = await Application.find({ employer: employerId })
-            .populate('applicant', 'name email')
+        const applicants = await Application.find({})
             .sort({ createdAt: -1 });
         res.status(200).json(applicants);
     }
