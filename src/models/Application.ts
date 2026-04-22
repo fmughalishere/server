@@ -10,7 +10,7 @@ const experienceSchema = new mongoose.Schema({
 
 const applicationSchema = new mongoose.Schema({
   applicant: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job' }, 
+  job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: false }, 
   employer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   fullName: { type: String, required: true },
   image: { type: String },
