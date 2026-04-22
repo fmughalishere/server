@@ -10,10 +10,10 @@ const experienceSchema = new mongoose.Schema({
 
 const applicationSchema = new mongoose.Schema({
   applicant: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job'}, 
+  job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job' }, 
   employer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  image: { type: String },
   fullName: { type: String, required: true },
+  image: { type: String },
   dob: { type: Date },
   gender: { type: String, enum: ['Male', 'Female', 'Other'] },
   country: { type: String, default: 'Pakistan' },
@@ -24,8 +24,6 @@ const applicationSchema = new mongoose.Schema({
   isFresher: { type: Boolean, default: false },
   experience: [experienceSchema],
   achievements: { type: String },
-  resume: { type: String },      
-  coverLetter: { type: String },
   status: {
     type: String,
     enum: ['pending', 'shortlisted', 'rejected', 'interviewing', 'Offered'],

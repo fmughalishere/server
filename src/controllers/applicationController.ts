@@ -64,42 +64,31 @@ export const getMyApplications = async (req: any, res: Response) => {
 
 export const createApplication = async (req: any, res: any) => {
   try {
-    const { 
-      employerId,
-      fullName, dob, gender, city, email, phone, whatsapp, 
-      category, jobtype, education, isFresher, experienceData, 
-      achievements, image, emailPrivacy, phonePrivacy, whatsappPrivacy, resume 
+    const {
+      fullName, dob, gender, city, image, jobtype, 
+      category, education, isFresher, experience, achievements
     } = req.body;
 
-    const newApplication = new Application({
-      applicant: req.user.id,
-      employer: employerId,
+    const application = new Application({
+      applicant: req.user._id,
       fullName,
       dob,
       gender,
       city,
-      email,
-      emailPrivacy,
-      phone,
-      phonePrivacy,
-      whatsapp,
-      whatsappPrivacy,
-      category,
+      image,
       jobtype,
+      category,
       education,
       isFresher,
-      experience: isFresher ? [] : experienceData,
-      achievements,
-      image,
-      resume,
-      status: 'pending'
+      experience,
+      achievements
     });
 
-    await newApplication.save();
-    res.status(201).json({ message: "Application submitted successfully", data: newApplication });
+    const createdApplication = await application.save();
+    res.status(201).json(createdApplication);
+
   } catch (error: any) {
-    console.error("Create App Error:", error);
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message || "Failed to create application" });
   }
 };
 
