@@ -15,15 +15,18 @@ const applicationSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
   image: { type: String },
   dob: { type: Date },
-  gender: { type: String, enum: ['Male', 'Female', 'Other'] },
+  gender: { type: String, enum: ['Male', 'Female', 'Other'], default: 'Male' },
   country: { type: String, default: 'Pakistan' },
   city: { type: String, required: true },
   category: { type: String, required: true },
-  jobtype: { type: String, default: 'Full-Time' },
+  jobtype: { type: String, default: 'Full-Time' }, 
   education: { type: String },
   isFresher: { type: Boolean, default: false },
+  yearsOfExperience: { type: String },
   experience: [experienceSchema],
+  skills: [{ type: String }],
   achievements: { type: String },
+  
   status: {
     type: String,
     enum: ['pending', 'shortlisted', 'rejected', 'interviewing', 'Offered'],
@@ -31,4 +34,4 @@ const applicationSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-export const Application = mongoose.model('Application', applicationSchema);
+export const Application = mongoose.models.Application || mongoose.model('Application', applicationSchema);
