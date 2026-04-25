@@ -16,7 +16,7 @@ const applicationSchema = new mongoose.Schema({
     gender: { type: String, enum: ['Male', 'Female', 'Other'], default: 'Male' },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    whatsapp: { type: String },
+    whatsapp: { type: String, required: true },
     country: { type: String, default: 'Pakistan' },
     city: { type: String, required: true },
     category: { type: String, required: true },
