@@ -29,7 +29,7 @@ const applicationSchema = new mongoose.Schema({
   isFresher: { type: Boolean, default: false },
   yearsOfExperience: { type: Number },
   experience: [experienceSchema],
-    status: {
+  status: {
     type: String,
     enum: ['pending', 'shortlisted', 'rejected', 'interviewing', 'Offered'],
     default: 'pending'
