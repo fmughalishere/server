@@ -6,7 +6,8 @@ import {
     getJobseekerStats, 
     getSingleApplication, 
     getEmployerApplicants, 
-    updateApplicationStatus 
+    updateApplicationStatus,
+    sendJobOffer
 } from '../controllers/applicationController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -16,5 +17,6 @@ router.put('/status/:id', protect, updateApplicationStatus);
 router.get('/jobseeker-stats', protect, getJobseekerStats);
 router.get('/my-applications', protect, getMyApplications);
 router.get('/:id', getSingleApplication);
+router.post('/:id/offer', protect, sendJobOffer);
 
 export default router;
