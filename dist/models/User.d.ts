@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 declare const User: mongoose.Model<{
     name: string;
     email: string;
-    password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    password?: string | null;
     googleId?: string | null;
     avatar?: string | null;
     profile?: {
@@ -17,9 +17,9 @@ declare const User: mongoose.Model<{
 }, mongoose.Document<unknown, {}, {
     name: string;
     email: string;
-    password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    password?: string | null;
     googleId?: string | null;
     avatar?: string | null;
     profile?: {
@@ -34,9 +34,9 @@ declare const User: mongoose.Model<{
 }> & Omit<{
     name: string;
     email: string;
-    password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    password?: string | null;
     googleId?: string | null;
     avatar?: string | null;
     profile?: {
@@ -55,9 +55,9 @@ declare const User: mongoose.Model<{
 }, {
     name: string;
     email: string;
-    password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    password?: string | null;
     googleId?: string | null;
     avatar?: string | null;
     profile?: {
@@ -68,9 +68,9 @@ declare const User: mongoose.Model<{
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
     name: string;
     email: string;
-    password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    password?: string | null;
     googleId?: string | null;
     avatar?: string | null;
     profile?: {
@@ -85,9 +85,9 @@ declare const User: mongoose.Model<{
 }>> & Omit<{
     name: string;
     email: string;
-    password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    password?: string | null;
     googleId?: string | null;
     avatar?: string | null;
     profile?: {
@@ -107,9 +107,9 @@ declare const User: mongoose.Model<{
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         name: string;
         email: string;
-        password: string;
         role: "jobseeker" | "employer";
         savedJobs: mongoose.Types.ObjectId[];
+        password?: string | null;
         googleId?: string | null;
         avatar?: string | null;
         profile?: {
@@ -124,9 +124,9 @@ declare const User: mongoose.Model<{
     }>> & Omit<{
         name: string;
         email: string;
-        password: string;
         role: "jobseeker" | "employer";
         savedJobs: mongoose.Types.ObjectId[];
+        password?: string | null;
         googleId?: string | null;
         avatar?: string | null;
         profile?: {
@@ -144,9 +144,9 @@ declare const User: mongoose.Model<{
 }, {
     name: string;
     email: string;
-    password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    password?: string | null;
     googleId?: string | null;
     avatar?: string | null;
     profile?: {
@@ -163,9 +163,9 @@ declare const User: mongoose.Model<{
 }>, {
     name: string;
     email: string;
-    password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    password?: string | null;
     googleId?: string | null;
     avatar?: string | null;
     profile?: {
