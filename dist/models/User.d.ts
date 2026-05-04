@@ -5,6 +5,8 @@ declare const User: mongoose.Model<{
     password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    googleId?: string | null;
+    avatar?: string | null;
     profile?: {
         resume?: string | null;
         bio?: string | null;
@@ -18,6 +20,8 @@ declare const User: mongoose.Model<{
     password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    googleId?: string | null;
+    avatar?: string | null;
     profile?: {
         resume?: string | null;
         bio?: string | null;
@@ -33,6 +37,8 @@ declare const User: mongoose.Model<{
     password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    googleId?: string | null;
+    avatar?: string | null;
     profile?: {
         resume?: string | null;
         bio?: string | null;
@@ -52,6 +58,8 @@ declare const User: mongoose.Model<{
     password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    googleId?: string | null;
+    avatar?: string | null;
     profile?: {
         resume?: string | null;
         bio?: string | null;
@@ -63,6 +71,8 @@ declare const User: mongoose.Model<{
     password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    googleId?: string | null;
+    avatar?: string | null;
     profile?: {
         resume?: string | null;
         bio?: string | null;
@@ -78,6 +88,8 @@ declare const User: mongoose.Model<{
     password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    googleId?: string | null;
+    avatar?: string | null;
     profile?: {
         resume?: string | null;
         bio?: string | null;
@@ -98,6 +110,8 @@ declare const User: mongoose.Model<{
         password: string;
         role: "jobseeker" | "employer";
         savedJobs: mongoose.Types.ObjectId[];
+        googleId?: string | null;
+        avatar?: string | null;
         profile?: {
             resume?: string | null;
             bio?: string | null;
@@ -113,6 +127,8 @@ declare const User: mongoose.Model<{
         password: string;
         role: "jobseeker" | "employer";
         savedJobs: mongoose.Types.ObjectId[];
+        googleId?: string | null;
+        avatar?: string | null;
         profile?: {
             resume?: string | null;
             bio?: string | null;
@@ -131,6 +147,8 @@ declare const User: mongoose.Model<{
     password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    googleId?: string | null;
+    avatar?: string | null;
     profile?: {
         resume?: string | null;
         bio?: string | null;
@@ -148,6 +166,8 @@ declare const User: mongoose.Model<{
     password: string;
     role: "jobseeker" | "employer";
     savedJobs: mongoose.Types.ObjectId[];
+    googleId?: string | null;
+    avatar?: string | null;
     profile?: {
         resume?: string | null;
         bio?: string | null;
