@@ -56,7 +56,7 @@ export const getMyApplications = async (req, res) => {
 };
 export const createApplication = async (req, res) => {
     try {
-        const { fullName, dob, gender, city, image, jobtype, category, education, isFresher, experience, achievements, email, phone, whatsapp } = req.body;
+        const { fullName, dob, gender, city, image, jobtype, category, education, isFresher, experience, achievements, email, phone, whatsapp, salaryDemand } = req.body;
         const createdApplication = await Application.create({
             applicant: req.user._id,
             fullName,
@@ -72,6 +72,7 @@ export const createApplication = async (req, res) => {
             education,
             isFresher,
             experience,
+            salaryDemand,
             achievements
         });
         res.status(201).json(createdApplication);

@@ -66,7 +66,7 @@ export const createApplication = async (req: any, res: any) => {
     const {
       fullName, dob, gender, city, image, jobtype, 
       category, education, isFresher, experience, achievements,
-      email, phone, whatsapp
+      email, phone, whatsapp, salaryDemand
     } = req.body;
     const createdApplication = await (Application as any).create({
       applicant: req.user._id,
@@ -83,6 +83,7 @@ export const createApplication = async (req: any, res: any) => {
       education,
       isFresher,
       experience,
+      salaryDemand,
       achievements
     } as any);
 
