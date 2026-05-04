@@ -4,7 +4,7 @@ import { getJobSeekerStats } from '../controllers/jobseekerdashboardController.j
 import { authMiddleware } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
-router.get('/employer-stats', authMiddleware, getEmployerStats);
+router.get('/employer-stats', authMiddleware as any, getEmployerStats as any);
 router.get('/jobseeker-stats', authMiddleware, getJobSeekerStats);
 
 export default router;
