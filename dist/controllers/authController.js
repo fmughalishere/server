@@ -21,6 +21,39 @@ export const register = async (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 };
+export const companyRegister = async (req, res) => {
+    const { companyName, email, password, phone, website, location, industry, companySize, description, contactPerson, designation, logo } = req.body;
+    try {
+        const companyExists = await User.findOne({ email });
+        if (companyExists) {
+            return res.status(400).json({ message: 'Company with this email already exists' });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const company = await User.create({
+            name: companyName,
+            email,
+            password: hashedPassword,
+            role: 'employer',
+            phone,
+            website,
+            location,
+            industry,
+            companySize,
+            description,
+            contactPerson,
+            designation,
+            logo
+        });
+        res.status(201).json({
+            message: 'Company registered successfully',
+            companyId: company._id
+        });
+    }
+    catch (error) {
+        console.error("Company Register Error:", error);
+        res.status(500).json({ message: 'Server Error during company registration' });
+    }
+};
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {

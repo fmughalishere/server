@@ -1,31 +1,31 @@
 import mongoose from 'mongoose';
 declare const _default: mongoose.Model<{
     type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-    city: string;
     description: string;
+    city: string;
+    skills: string[];
     postedBy: mongoose.Types.ObjectId;
     title: string;
     company: string;
     category: string;
     status: "active" | "closed";
-    skills: string[];
-    salary?: string | null;
     experience?: string | null;
+    salary?: string | null;
     deadline?: NativeDate | null;
 } & mongoose.DefaultTimestampProps, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
     type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-    city: string;
     description: string;
+    city: string;
+    skills: string[];
     postedBy: mongoose.Types.ObjectId;
     title: string;
     company: string;
     category: string;
     status: "active" | "closed";
-    skills: string[];
-    salary?: string | null;
     experience?: string | null;
+    salary?: string | null;
     deadline?: NativeDate | null;
 } & mongoose.DefaultTimestampProps, {
     id: string;
@@ -33,16 +33,16 @@ declare const _default: mongoose.Model<{
     timestamps: true;
 }> & Omit<{
     type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-    city: string;
     description: string;
+    city: string;
+    skills: string[];
     postedBy: mongoose.Types.ObjectId;
     title: string;
     company: string;
     category: string;
     status: "active" | "closed";
-    skills: string[];
-    salary?: string | null;
     experience?: string | null;
+    salary?: string | null;
     deadline?: NativeDate | null;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
@@ -54,29 +54,29 @@ declare const _default: mongoose.Model<{
     timestamps: true;
 }, {
     type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-    city: string;
     description: string;
+    city: string;
+    skills: string[];
     postedBy: mongoose.Types.ObjectId;
     title: string;
     company: string;
     category: string;
     status: "active" | "closed";
-    skills: string[];
-    salary?: string | null;
     experience?: string | null;
+    salary?: string | null;
     deadline?: NativeDate | null;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
     type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-    city: string;
     description: string;
+    city: string;
+    skills: string[];
     postedBy: mongoose.Types.ObjectId;
     title: string;
     company: string;
     category: string;
     status: "active" | "closed";
-    skills: string[];
-    salary?: string | null;
     experience?: string | null;
+    salary?: string | null;
     deadline?: NativeDate | null;
 } & mongoose.DefaultTimestampProps, {
     id: string;
@@ -84,16 +84,16 @@ declare const _default: mongoose.Model<{
     timestamps: true;
 }>> & Omit<{
     type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-    city: string;
     description: string;
+    city: string;
+    skills: string[];
     postedBy: mongoose.Types.ObjectId;
     title: string;
     company: string;
     category: string;
     status: "active" | "closed";
-    skills: string[];
-    salary?: string | null;
     experience?: string | null;
+    salary?: string | null;
     deadline?: NativeDate | null;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
@@ -106,16 +106,16 @@ declare const _default: mongoose.Model<{
 } | {
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-        city: string;
         description: string;
+        city: string;
+        skills: string[];
         postedBy: mongoose.Types.ObjectId;
         title: string;
         company: string;
         category: string;
         status: "active" | "closed";
-        skills: string[];
-        salary?: string | null;
         experience?: string | null;
+        salary?: string | null;
         deadline?: NativeDate | null;
     } & mongoose.DefaultTimestampProps, {
         id: string;
@@ -123,16 +123,16 @@ declare const _default: mongoose.Model<{
         timestamps: true;
     }>> & Omit<{
         type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-        city: string;
         description: string;
+        city: string;
+        skills: string[];
         postedBy: mongoose.Types.ObjectId;
         title: string;
         company: string;
         category: string;
         status: "active" | "closed";
-        skills: string[];
-        salary?: string | null;
         experience?: string | null;
+        salary?: string | null;
         deadline?: NativeDate | null;
     } & mongoose.DefaultTimestampProps & {
         _id: mongoose.Types.ObjectId;
@@ -143,16 +143,16 @@ declare const _default: mongoose.Model<{
     }> | undefined;
 }, {
     type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-    city: string;
     description: string;
+    city: string;
+    skills: string[];
     postedBy: mongoose.Types.ObjectId;
     title: string;
     company: string;
     category: string;
     status: "active" | "closed";
-    skills: string[];
-    salary?: string | null;
     experience?: string | null;
+    salary?: string | null;
     deadline?: NativeDate | null;
     createdAt: NativeDate;
     updatedAt: NativeDate;
@@ -162,16 +162,16 @@ declare const _default: mongoose.Model<{
     __v: number;
 }>, {
     type: "Full-time" | "Part-time" | "Remote" | "Contract" | "Internship";
-    city: string;
     description: string;
+    city: string;
+    skills: string[];
     postedBy: mongoose.Types.ObjectId;
     title: string;
     company: string;
     category: string;
     status: "active" | "closed";
-    skills: string[];
-    salary?: string | null;
     experience?: string | null;
+    salary?: string | null;
     deadline?: NativeDate | null;
     createdAt: NativeDate;
     updatedAt: NativeDate;

@@ -5,19 +5,33 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   googleId: { type: String },
-  avatar: { type: String }  ,
+  avatar: { type: String },
   role: { 
     type: String, 
     enum: ['jobseeker', 'employer'], 
     default: 'jobseeker' 
   },
-  savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }] ,
+
+  phone: { type: String },
+  website: { type: String },
+  location: { type: String },
+  industry: { type: String },
+  companySize: { type: String },
+  description: { type: String },
+  contactPerson: { type: String },
+  designation: { type: String },
+  logo: { type: String },
+  savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }], 
   profile: {
     resume: { type: String, default: null },
     bio: { type: String, default: null },
     city: { type: String, default: null },
+    experience: { type: String },
+    skills: [{ type: String }],
   }
 }, { timestamps: true });
+
+userSchema.index({ email: 1 });
 
 const User = mongoose.model('User', userSchema);
 export default User;

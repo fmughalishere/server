@@ -7,10 +7,21 @@ declare const User: mongoose.Model<{
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
     avatar?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    location?: string | null;
+    industry?: string | null;
+    companySize?: string | null;
+    description?: string | null;
+    contactPerson?: string | null;
+    designation?: string | null;
+    logo?: string | null;
     profile?: {
+        skills: string[];
         resume?: string | null;
         bio?: string | null;
         city?: string | null;
+        experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps, {}, {}, {
     id: string;
@@ -22,10 +33,21 @@ declare const User: mongoose.Model<{
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
     avatar?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    location?: string | null;
+    industry?: string | null;
+    companySize?: string | null;
+    description?: string | null;
+    contactPerson?: string | null;
+    designation?: string | null;
+    logo?: string | null;
     profile?: {
+        skills: string[];
         resume?: string | null;
         bio?: string | null;
         city?: string | null;
+        experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps, {
     id: string;
@@ -39,10 +61,21 @@ declare const User: mongoose.Model<{
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
     avatar?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    location?: string | null;
+    industry?: string | null;
+    companySize?: string | null;
+    description?: string | null;
+    contactPerson?: string | null;
+    designation?: string | null;
+    logo?: string | null;
     profile?: {
+        skills: string[];
         resume?: string | null;
         bio?: string | null;
         city?: string | null;
+        experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
@@ -60,10 +93,21 @@ declare const User: mongoose.Model<{
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
     avatar?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    location?: string | null;
+    industry?: string | null;
+    companySize?: string | null;
+    description?: string | null;
+    contactPerson?: string | null;
+    designation?: string | null;
+    logo?: string | null;
     profile?: {
+        skills: string[];
         resume?: string | null;
         bio?: string | null;
         city?: string | null;
+        experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
     name: string;
@@ -73,10 +117,21 @@ declare const User: mongoose.Model<{
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
     avatar?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    location?: string | null;
+    industry?: string | null;
+    companySize?: string | null;
+    description?: string | null;
+    contactPerson?: string | null;
+    designation?: string | null;
+    logo?: string | null;
     profile?: {
+        skills: string[];
         resume?: string | null;
         bio?: string | null;
         city?: string | null;
+        experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps, {
     id: string;
@@ -90,10 +145,21 @@ declare const User: mongoose.Model<{
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
     avatar?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    location?: string | null;
+    industry?: string | null;
+    companySize?: string | null;
+    description?: string | null;
+    contactPerson?: string | null;
+    designation?: string | null;
+    logo?: string | null;
     profile?: {
+        skills: string[];
         resume?: string | null;
         bio?: string | null;
         city?: string | null;
+        experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
@@ -112,10 +178,21 @@ declare const User: mongoose.Model<{
         savedJobs: mongoose.Types.ObjectId[];
         googleId?: string | null;
         avatar?: string | null;
+        phone?: string | null;
+        website?: string | null;
+        location?: string | null;
+        industry?: string | null;
+        companySize?: string | null;
+        description?: string | null;
+        contactPerson?: string | null;
+        designation?: string | null;
+        logo?: string | null;
         profile?: {
+            skills: string[];
             resume?: string | null;
             bio?: string | null;
             city?: string | null;
+            experience?: string | null;
         } | null;
     } & mongoose.DefaultTimestampProps, {
         id: string;
@@ -129,10 +206,21 @@ declare const User: mongoose.Model<{
         savedJobs: mongoose.Types.ObjectId[];
         googleId?: string | null;
         avatar?: string | null;
+        phone?: string | null;
+        website?: string | null;
+        location?: string | null;
+        industry?: string | null;
+        companySize?: string | null;
+        description?: string | null;
+        contactPerson?: string | null;
+        designation?: string | null;
+        logo?: string | null;
         profile?: {
+            skills: string[];
             resume?: string | null;
             bio?: string | null;
             city?: string | null;
+            experience?: string | null;
         } | null;
     } & mongoose.DefaultTimestampProps & {
         _id: mongoose.Types.ObjectId;
@@ -149,10 +237,21 @@ declare const User: mongoose.Model<{
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
     avatar?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    location?: string | null;
+    industry?: string | null;
+    companySize?: string | null;
+    description?: string | null;
+    contactPerson?: string | null;
+    designation?: string | null;
+    logo?: string | null;
     profile?: {
+        skills: string[];
         resume?: string | null;
         bio?: string | null;
         city?: string | null;
+        experience?: string | null;
     } | null;
     createdAt: NativeDate;
     updatedAt: NativeDate;
@@ -168,10 +267,21 @@ declare const User: mongoose.Model<{
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
     avatar?: string | null;
+    phone?: string | null;
+    website?: string | null;
+    location?: string | null;
+    industry?: string | null;
+    companySize?: string | null;
+    description?: string | null;
+    contactPerson?: string | null;
+    designation?: string | null;
+    logo?: string | null;
     profile?: {
+        skills: string[];
         resume?: string | null;
         bio?: string | null;
         city?: string | null;
+        experience?: string | null;
     } | null;
     createdAt: NativeDate;
     updatedAt: NativeDate;
