@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 declare const _default: mongoose.Model<{
-    title: string;
     category: string;
+    title: string;
     content: string;
     author: string;
     image?: string | null;
 } & mongoose.DefaultTimestampProps, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
-    title: string;
     category: string;
+    title: string;
     content: string;
     author: string;
     image?: string | null;
@@ -18,8 +18,8 @@ declare const _default: mongoose.Model<{
 }, {
     timestamps: true;
 }> & Omit<{
-    title: string;
     category: string;
+    title: string;
     content: string;
     author: string;
     image?: string | null;
@@ -32,14 +32,14 @@ declare const _default: mongoose.Model<{
 }, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
     timestamps: true;
 }, {
-    title: string;
     category: string;
+    title: string;
     content: string;
     author: string;
     image?: string | null;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    title: string;
     category: string;
+    title: string;
     content: string;
     author: string;
     image?: string | null;
@@ -48,8 +48,8 @@ declare const _default: mongoose.Model<{
 }, mongoose.MergeType<mongoose.DefaultSchemaOptions, {
     timestamps: true;
 }>> & Omit<{
-    title: string;
     category: string;
+    title: string;
     content: string;
     author: string;
     image?: string | null;
@@ -63,8 +63,8 @@ declare const _default: mongoose.Model<{
     [path: string]: mongoose.SchemaDefinitionProperty<undefined, any, any>;
 } | {
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
-        title: string;
         category: string;
+        title: string;
         content: string;
         author: string;
         image?: string | null;
@@ -73,8 +73,8 @@ declare const _default: mongoose.Model<{
     }, mongoose.MergeType<mongoose.DefaultSchemaOptions, {
         timestamps: true;
     }>> & Omit<{
-        title: string;
         category: string;
+        title: string;
         content: string;
         author: string;
         image?: string | null;
@@ -86,8 +86,8 @@ declare const _default: mongoose.Model<{
         id: string;
     }> | undefined;
 }, {
-    title: string;
     category: string;
+    title: string;
     content: string;
     author: string;
     image?: string | null;
@@ -98,8 +98,8 @@ declare const _default: mongoose.Model<{
 } & {
     __v: number;
 }>, {
-    title: string;
     category: string;
+    title: string;
     content: string;
     author: string;
     image?: string | null;
