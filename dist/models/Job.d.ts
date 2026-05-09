@@ -2,94 +2,88 @@ import mongoose from 'mongoose';
 declare const _default: mongoose.Model<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
     city: string;
-    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
     category: string;
     education: string;
     status: "active" | "closed";
+    description?: string | null;
     experience?: string | null;
     salary?: string | null;
-} & mongoose.DefaultTimestampProps, {}, {}, {
+}, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
     city: string;
-    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
     category: string;
     education: string;
     status: "active" | "closed";
+    description?: string | null;
     experience?: string | null;
     salary?: string | null;
-} & mongoose.DefaultTimestampProps, {
-    id: string;
 }, {
-    timestamps: true;
-}> & Omit<{
+    id: string;
+}, mongoose.DefaultSchemaOptions> & Omit<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
     city: string;
-    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
     category: string;
     education: string;
     status: "active" | "closed";
+    description?: string | null;
     experience?: string | null;
     salary?: string | null;
-} & mongoose.DefaultTimestampProps & {
+} & {
     _id: mongoose.Types.ObjectId;
 } & {
     __v: number;
 }, "id"> & {
     id: string;
-}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
-    timestamps: true;
+}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
+    type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    city: string;
+    skills: string[];
+    postedBy: mongoose.Types.ObjectId;
+    company: string;
+    category: string;
+    education: string;
+    status: "active" | "closed";
+    description?: string | null;
+    experience?: string | null;
+    salary?: string | null;
+}, mongoose.Document<unknown, {}, {
+    type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    city: string;
+    skills: string[];
+    postedBy: mongoose.Types.ObjectId;
+    company: string;
+    category: string;
+    education: string;
+    status: "active" | "closed";
+    description?: string | null;
+    experience?: string | null;
+    salary?: string | null;
 }, {
-    type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    city: string;
-    description: string;
-    skills: string[];
-    postedBy: mongoose.Types.ObjectId;
-    company: string;
-    category: string;
-    education: string;
-    status: "active" | "closed";
-    experience?: string | null;
-    salary?: string | null;
-} & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
-    type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    city: string;
-    description: string;
-    skills: string[];
-    postedBy: mongoose.Types.ObjectId;
-    company: string;
-    category: string;
-    education: string;
-    status: "active" | "closed";
-    experience?: string | null;
-    salary?: string | null;
-} & mongoose.DefaultTimestampProps, {
     id: string;
-}, mongoose.MergeType<mongoose.DefaultSchemaOptions, {
-    timestamps: true;
-}>> & Omit<{
+}, mongoose.DefaultSchemaOptions> & Omit<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
     city: string;
-    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
     category: string;
     education: string;
     status: "active" | "closed";
+    description?: string | null;
     experience?: string | null;
     salary?: string | null;
-} & mongoose.DefaultTimestampProps & {
+} & {
     _id: mongoose.Types.ObjectId;
 } & {
     __v: number;
@@ -101,32 +95,30 @@ declare const _default: mongoose.Model<{
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
         city: string;
-        description: string;
         skills: string[];
         postedBy: mongoose.Types.ObjectId;
         company: string;
         category: string;
         education: string;
         status: "active" | "closed";
+        description?: string | null;
         experience?: string | null;
         salary?: string | null;
-    } & mongoose.DefaultTimestampProps, {
+    }, {
         id: string;
-    }, mongoose.MergeType<mongoose.DefaultSchemaOptions, {
-        timestamps: true;
-    }>> & Omit<{
+    }, mongoose.DefaultSchemaOptions> & Omit<{
         type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
         city: string;
-        description: string;
         skills: string[];
         postedBy: mongoose.Types.ObjectId;
         company: string;
         category: string;
         education: string;
         status: "active" | "closed";
+        description?: string | null;
         experience?: string | null;
         salary?: string | null;
-    } & mongoose.DefaultTimestampProps & {
+    } & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
@@ -136,17 +128,15 @@ declare const _default: mongoose.Model<{
 }, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
     city: string;
-    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
     category: string;
     education: string;
     status: "active" | "closed";
+    description?: string | null;
     experience?: string | null;
     salary?: string | null;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
 } & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -154,17 +144,15 @@ declare const _default: mongoose.Model<{
 }>, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
     city: string;
-    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
     category: string;
     education: string;
     status: "active" | "closed";
+    description?: string | null;
     experience?: string | null;
     salary?: string | null;
-    createdAt: NativeDate;
-    updatedAt: NativeDate;
 } & {
     _id: mongoose.Types.ObjectId;
 } & {

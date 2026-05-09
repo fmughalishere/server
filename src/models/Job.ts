@@ -4,7 +4,7 @@ const jobSchema = new mongoose.Schema({
   postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, 
   company: { type: String, required: true },
   category: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String },
   education: { type: String, required: true},
   city: { type: String, required: true },
   salary: { type: String },
@@ -16,6 +16,6 @@ const jobSchema = new mongoose.Schema({
     default: 'Full-time' 
   },
   skills: [String],
-}, { timestamps: true });
+});
 
 export default mongoose.model('Job', jobSchema);
