@@ -24,7 +24,7 @@ export const register = async (req, res) => {
     }
 };
 export const companyRegister = async (req, res) => {
-    const { companyName, email, password, phone, website, location, industry, companySize, description, contactPerson, designation, logo } = req.body;
+    const { companyName, email, password, phone, website, city, location, industry, companySize, description, contactPerson, designation, logo } = req.body;
     try {
         const companyExists = await User.findOne({ email });
         if (companyExists)
@@ -39,6 +39,7 @@ export const companyRegister = async (req, res) => {
             phone,
             website,
             location,
+            city,
             industry,
             companySize,
             description,
