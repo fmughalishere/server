@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     phone: { type: String },
     website: { type: String },
     location: { type: String },
+    city: { type: String },
     industry: { type: String },
     companySize: { type: String },
     description: { type: String },

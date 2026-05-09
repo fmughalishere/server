@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 declare const _default: mongoose.Model<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    description: string;
     city: string;
+    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
@@ -15,8 +15,8 @@ declare const _default: mongoose.Model<{
     id: string;
 }, mongoose.Document<unknown, {}, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    description: string;
     city: string;
+    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
@@ -31,8 +31,8 @@ declare const _default: mongoose.Model<{
     timestamps: true;
 }> & Omit<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    description: string;
     city: string;
+    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
@@ -51,8 +51,8 @@ declare const _default: mongoose.Model<{
     timestamps: true;
 }, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    description: string;
     city: string;
+    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
@@ -63,8 +63,8 @@ declare const _default: mongoose.Model<{
     salary?: string | null;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    description: string;
     city: string;
+    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
@@ -79,8 +79,8 @@ declare const _default: mongoose.Model<{
     timestamps: true;
 }>> & Omit<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    description: string;
     city: string;
+    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
@@ -100,8 +100,8 @@ declare const _default: mongoose.Model<{
 } | {
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-        description: string;
         city: string;
+        description: string;
         skills: string[];
         postedBy: mongoose.Types.ObjectId;
         company: string;
@@ -116,8 +116,8 @@ declare const _default: mongoose.Model<{
         timestamps: true;
     }>> & Omit<{
         type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-        description: string;
         city: string;
+        description: string;
         skills: string[];
         postedBy: mongoose.Types.ObjectId;
         company: string;
@@ -135,8 +135,8 @@ declare const _default: mongoose.Model<{
     }> | undefined;
 }, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    description: string;
     city: string;
+    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;
@@ -153,8 +153,8 @@ declare const _default: mongoose.Model<{
     __v: number;
 }>, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
-    description: string;
     city: string;
+    description: string;
     skills: string[];
     postedBy: mongoose.Types.ObjectId;
     company: string;

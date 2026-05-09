@@ -10,6 +10,7 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    city?: string | null;
     industry?: string | null;
     companySize?: string | null;
     description?: string | null;
@@ -18,9 +19,9 @@ declare const User: mongoose.Model<{
     logo?: string | null;
     profile?: {
         skills: string[];
+        city?: string | null;
         resume?: string | null;
         bio?: string | null;
-        city?: string | null;
         experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps, {}, {}, {
@@ -36,6 +37,7 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    city?: string | null;
     industry?: string | null;
     companySize?: string | null;
     description?: string | null;
@@ -44,9 +46,9 @@ declare const User: mongoose.Model<{
     logo?: string | null;
     profile?: {
         skills: string[];
+        city?: string | null;
         resume?: string | null;
         bio?: string | null;
-        city?: string | null;
         experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps, {
@@ -64,6 +66,7 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    city?: string | null;
     industry?: string | null;
     companySize?: string | null;
     description?: string | null;
@@ -72,9 +75,9 @@ declare const User: mongoose.Model<{
     logo?: string | null;
     profile?: {
         skills: string[];
+        city?: string | null;
         resume?: string | null;
         bio?: string | null;
-        city?: string | null;
         experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps & {
@@ -96,6 +99,7 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    city?: string | null;
     industry?: string | null;
     companySize?: string | null;
     description?: string | null;
@@ -104,9 +108,9 @@ declare const User: mongoose.Model<{
     logo?: string | null;
     profile?: {
         skills: string[];
+        city?: string | null;
         resume?: string | null;
         bio?: string | null;
-        city?: string | null;
         experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
@@ -120,6 +124,7 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    city?: string | null;
     industry?: string | null;
     companySize?: string | null;
     description?: string | null;
@@ -128,9 +133,9 @@ declare const User: mongoose.Model<{
     logo?: string | null;
     profile?: {
         skills: string[];
+        city?: string | null;
         resume?: string | null;
         bio?: string | null;
-        city?: string | null;
         experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps, {
@@ -148,6 +153,7 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    city?: string | null;
     industry?: string | null;
     companySize?: string | null;
     description?: string | null;
@@ -156,9 +162,9 @@ declare const User: mongoose.Model<{
     logo?: string | null;
     profile?: {
         skills: string[];
+        city?: string | null;
         resume?: string | null;
         bio?: string | null;
-        city?: string | null;
         experience?: string | null;
     } | null;
 } & mongoose.DefaultTimestampProps & {
@@ -181,6 +187,7 @@ declare const User: mongoose.Model<{
         phone?: string | null;
         website?: string | null;
         location?: string | null;
+        city?: string | null;
         industry?: string | null;
         companySize?: string | null;
         description?: string | null;
@@ -189,9 +196,9 @@ declare const User: mongoose.Model<{
         logo?: string | null;
         profile?: {
             skills: string[];
+            city?: string | null;
             resume?: string | null;
             bio?: string | null;
-            city?: string | null;
             experience?: string | null;
         } | null;
     } & mongoose.DefaultTimestampProps, {
@@ -209,6 +216,7 @@ declare const User: mongoose.Model<{
         phone?: string | null;
         website?: string | null;
         location?: string | null;
+        city?: string | null;
         industry?: string | null;
         companySize?: string | null;
         description?: string | null;
@@ -217,9 +225,9 @@ declare const User: mongoose.Model<{
         logo?: string | null;
         profile?: {
             skills: string[];
+            city?: string | null;
             resume?: string | null;
             bio?: string | null;
-            city?: string | null;
             experience?: string | null;
         } | null;
     } & mongoose.DefaultTimestampProps & {
@@ -240,6 +248,7 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    city?: string | null;
     industry?: string | null;
     companySize?: string | null;
     description?: string | null;
@@ -248,9 +257,9 @@ declare const User: mongoose.Model<{
     logo?: string | null;
     profile?: {
         skills: string[];
+        city?: string | null;
         resume?: string | null;
         bio?: string | null;
-        city?: string | null;
         experience?: string | null;
     } | null;
     createdAt: NativeDate;
@@ -270,6 +279,7 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    city?: string | null;
     industry?: string | null;
     companySize?: string | null;
     description?: string | null;
@@ -278,9 +288,9 @@ declare const User: mongoose.Model<{
     logo?: string | null;
     profile?: {
         skills: string[];
+        city?: string | null;
         resume?: string | null;
         bio?: string | null;
-        city?: string | null;
         experience?: string | null;
     } | null;
     createdAt: NativeDate;
