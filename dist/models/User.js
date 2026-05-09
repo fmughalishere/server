@@ -10,6 +10,8 @@ const userSchema = new mongoose.Schema({
         enum: ['jobseeker', 'employer'],
         default: 'jobseeker'
     },
+    isVerified: { type: Boolean, default: false },
+    verificationToken: { type: String },
     phone: { type: String },
     website: { type: String },
     location: { type: String },

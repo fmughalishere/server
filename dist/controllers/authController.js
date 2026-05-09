@@ -1,6 +1,8 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
+import crypto from 'crypto';
 export const register = async (req, res) => {
     const { name, email, password, role } = req.body;
     try {
@@ -25,10 +27,10 @@ export const companyRegister = async (req, res) => {
     const { companyName, email, password, phone, website, location, industry, companySize, description, contactPerson, designation, logo } = req.body;
     try {
         const companyExists = await User.findOne({ email });
-        if (companyExists) {
-            return res.status(400).json({ message: 'Company with this email already exists' });
-        }
+        if (companyExists)
+            return res.status(400).json({ message: 'Email already exists' });
         const hashedPassword = await bcrypt.hash(password, 10);
+        const verificationToken = crypto.randomBytes(32).toString('hex');
         const company = await User.create({
             name: companyName,
             email,
@@ -42,16 +44,56 @@ export const companyRegister = async (req, res) => {
             description,
             contactPerson,
             designation,
-            logo
+            logo,
+            verificationToken,
+            isVerified: false
         });
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+        const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+        const mailOptions = {
+            from: `"EasyJobsPK" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: "Verify Your Company Account - EasyJobsPK",
+            html: `
+        <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+          <h2 style="color: #00004d;">Welcome to EasyJobsPK!</h2>
+          <p>Hello ${companyName},</p>
+          <p>Please click the button below to verify your business account and start hiring.</p>
+          <a href="${verificationLink}" style="background: #00004d; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email Address</a>
+        </div>
+      `,
+        };
+        await transporter.sendMail(mailOptions);
         res.status(201).json({
-            message: 'Company registered successfully',
-            companyId: company._id
+            message: 'Company registered! Please check your email to verify account.'
         });
     }
     catch (error) {
-        console.error("Company Register Error:", error);
-        res.status(500).json({ message: 'Server Error during company registration' });
+        console.error("Register Error:", error);
+        res.status(500).json({ message: 'Server Error during registration' });
+    }
+};
+export const verifyEmail = async (req, res) => {
+    const token = req.query.token;
+    try {
+        const user = await User.findOne({ verificationToken: token });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid or expired token' });
+        }
+        user.isVerified = true;
+        user.verificationToken = null;
+        await user.save();
+        res.status(200).json({ message: 'Email verified successfully! You can now login.' });
+    }
+    catch (error) {
+        console.error("Verification Error:", error);
+        res.status(500).json({ message: 'Verification error' });
     }
 };
 export const login = async (req, res) => {
@@ -60,6 +102,9 @@ export const login = async (req, res) => {
         const user = await User.findOne({ email });
         if (!user)
             return res.status(400).json({ message: 'Invalid Credentials' });
+        if (user.role === 'employer' && !user.isVerified) {
+            return res.status(401).json({ message: 'Please verify your email before logging in.' });
+        }
         if (!user.password) {
             return res.status(400).json({
                 message: 'This account was created via Google. Please use Google Login.'
@@ -82,13 +127,11 @@ export const login = async (req, res) => {
 export const getSavedJobs = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).populate('savedJobs');
-        if (!user) {
+        if (!user)
             return res.status(404).json({ message: "User not found" });
-        }
         res.status(200).json(user.savedJobs);
     }
     catch (error) {
-        console.error("Fetch Saved Jobs Error:", error);
         res.status(500).json({ message: "Error fetching saved jobs" });
     }
 };
