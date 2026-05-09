@@ -12,6 +12,8 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     city?: string | null;
     industry?: string | null;
     companySize?: string | null;
@@ -41,6 +43,8 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     city?: string | null;
     industry?: string | null;
     companySize?: string | null;
@@ -72,6 +76,8 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     city?: string | null;
     industry?: string | null;
     companySize?: string | null;
@@ -107,6 +113,8 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     city?: string | null;
     industry?: string | null;
     companySize?: string | null;
@@ -134,6 +142,8 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     city?: string | null;
     industry?: string | null;
     companySize?: string | null;
@@ -165,6 +175,8 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     city?: string | null;
     industry?: string | null;
     companySize?: string | null;
@@ -201,6 +213,8 @@ declare const User: mongoose.Model<{
         phone?: string | null;
         website?: string | null;
         location?: string | null;
+        lat?: number | null;
+        lng?: number | null;
         city?: string | null;
         industry?: string | null;
         companySize?: string | null;
@@ -232,6 +246,8 @@ declare const User: mongoose.Model<{
         phone?: string | null;
         website?: string | null;
         location?: string | null;
+        lat?: number | null;
+        lng?: number | null;
         city?: string | null;
         industry?: string | null;
         companySize?: string | null;
@@ -266,6 +282,8 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     city?: string | null;
     industry?: string | null;
     companySize?: string | null;
@@ -299,6 +317,8 @@ declare const User: mongoose.Model<{
     phone?: string | null;
     website?: string | null;
     location?: string | null;
+    lat?: number | null;
+    lng?: number | null;
     city?: string | null;
     industry?: string | null;
     companySize?: string | null;

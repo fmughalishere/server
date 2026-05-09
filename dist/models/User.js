@@ -15,6 +15,8 @@ const userSchema = new mongoose.Schema({
     phone: { type: String },
     website: { type: String },
     location: { type: String },
+    lat: { type: Number },
+    lng: { type: Number },
     city: { type: String },
     industry: { type: String },
     companySize: { type: String },
