@@ -4,11 +4,17 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
     },
+    tls: {
+        rejectUnauthorized: false,
+        minVersion: 'TLSv1.2'
+    }
 });
 export const register = async (req, res) => {
     const { name, email, password, role } = req.body;
@@ -31,22 +37,25 @@ export const register = async (req, res) => {
             from: `"EasyJobsPK" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Verify Your Account - EasyJobsPK",
-            html: `
-        <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-          <h2 style="color: #00004d;">Welcome to EasyJobsPK!</h2>
-          <p>Hello ${name},</p>
-          <p>Thank you for registering. Please click the button below to verify your email address and activate your account.</p>
-          <a href="${verificationLink}" style="background: #00004d; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email Address</a>
-          <p style="margin-top: 20px; font-size: 12px; color: #777;">If the button doesn't work, copy and paste this link: <br/> ${verificationLink}</p>
-        </div>
-      `,
+            html: `<p>Hello ${name}, click here to verify: <a href="${verificationLink}">${verificationLink}</a></p>`,
         };
-        await transporter.sendMail(mailOptions);
-        res.status(201).json({ message: 'User registered! Please check your email to verify account.' });
+        try {
+            await transporter.sendMail(mailOptions);
+            return res.status(201).json({
+                message: 'Account created! Please check your email to verify.'
+            });
+        }
+        catch (mailError) {
+            console.error("Mail Sending Error:", mailError);
+            return res.status(201).json({
+                message: 'Account created, but we failed to send the verification email. Please contact support.',
+                error: mailError.message
+            });
+        }
     }
     catch (error) {
         console.error("Register Error:", error);
-        res.status(500).json({ message: 'Server Error' });
+        res.status(500).json({ message: 'Database Error: ' + error.message });
     }
 };
 export const companyRegister = async (req, res) => {
