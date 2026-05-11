@@ -5,16 +5,13 @@ import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
     },
-    tls: {
-        rejectUnauthorized: false,
-        minVersion: 'TLSv1.2'
-    }
+    connectionTimeout: 10000,
 });
 export const register = async (req, res) => {
     const { name, email, password, role } = req.body;
@@ -39,23 +36,18 @@ export const register = async (req, res) => {
             subject: "Verify Your Account - EasyJobsPK",
             html: `<p>Hello ${name}, click here to verify: <a href="${verificationLink}">${verificationLink}</a></p>`,
         };
-        try {
-            await transporter.sendMail(mailOptions);
-            return res.status(201).json({
-                message: 'Account created! Please check your email to verify.'
-            });
-        }
-        catch (mailError) {
-            console.error("Mail Sending Error:", mailError);
-            return res.status(201).json({
-                message: 'Account created, but we failed to send the verification email. Please contact support.',
-                error: mailError.message
-            });
-        }
+        transporter.sendMail(mailOptions).then(() => {
+            console.log("Email sent successfully in background");
+        }).catch((err) => {
+            console.error("Background Email Error:", err.message);
+        });
+        return res.status(201).json({
+            message: 'Account created successfully! Please check your email (it may take a minute).'
+        });
     }
     catch (error) {
         console.error("Register Error:", error);
-        res.status(500).json({ message: 'Database Error: ' + error.message });
+        res.status(500).json({ message: 'Server Error: ' + error.message });
     }
 };
 export const companyRegister = async (req, res) => {
