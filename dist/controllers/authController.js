@@ -3,6 +3,13 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+});
 export const register = async (req, res) => {
     const { name, email, password, role } = req.body;
     try {
@@ -10,13 +17,32 @@ export const register = async (req, res) => {
         if (userExists)
             return res.status(400).json({ message: 'User already exists' });
         const hashedPassword = await bcrypt.hash(password, 10);
+        const verificationToken = crypto.randomBytes(32).toString('hex');
         const user = await User.create({
             name,
             email,
             password: hashedPassword,
-            role: role || 'jobseeker'
+            role: role || 'jobseeker',
+            verificationToken,
+            isVerified: false
         });
-        res.status(201).json({ message: 'User registered successfully' });
+        const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+        const mailOptions = {
+            from: `"EasyJobsPK" <${process.env.EMAIL_USER}>`,
+            to: email,
+            subject: "Verify Your Account - EasyJobsPK",
+            html: `
+        <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+          <h2 style="color: #00004d;">Welcome to EasyJobsPK!</h2>
+          <p>Hello ${name},</p>
+          <p>Thank you for registering. Please click the button below to verify your email address and activate your account.</p>
+          <a href="${verificationLink}" style="background: #00004d; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email Address</a>
+          <p style="margin-top: 20px; font-size: 12px; color: #777;">If the button doesn't work, copy and paste this link: <br/> ${verificationLink}</p>
+        </div>
+      `,
+        };
+        await transporter.sendMail(mailOptions);
+        res.status(201).json({ message: 'User registered! Please check your email to verify account.' });
     }
     catch (error) {
         console.error("Register Error:", error);
@@ -50,13 +76,6 @@ export const companyRegister = async (req, res) => {
             logo,
             verificationToken,
             isVerified: false
-        });
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
         });
         const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
         const mailOptions = {
@@ -105,7 +124,7 @@ export const login = async (req, res) => {
         const user = await User.findOne({ email });
         if (!user)
             return res.status(400).json({ message: 'Invalid Credentials' });
-        if (user.role === 'employer' && !user.isVerified) {
+        if (!user.isVerified) {
             return res.status(401).json({ message: 'Please verify your email before logging in.' });
         }
         if (!user.password) {
