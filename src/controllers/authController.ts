@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
 const transporter = nodemailer.createTransport({
-  service: 'gmail', 
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+  connectionTimeout: 10000,
 });
 
 export const register = async (req: Request, res: Response) => {
@@ -27,40 +30,27 @@ export const register = async (req: Request, res: Response) => {
       verificationToken,
       isVerified: false 
     });
-
     const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
-    
     const mailOptions = {
       from: `"EasyJobsPK" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Verify Your Account - EasyJobsPK",
-      html: `
-        <div style="font-family: sans-serif; padding: 20px;">
-          <h2>Welcome to EasyJobsPK!</h2>
-          <p>Hello ${name}, please click below to verify your email:</p>
-          <a href="${verificationLink}" style="background: #00004d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email</a>
-          <p>Or copy this link: ${verificationLink}</p>
-        </div>
-      `,
+      html: `<p>Hello ${name}, click here to verify: <a href="${verificationLink}">${verificationLink}</a></p>`,
     };
-    try {
-      await transporter.sendMail(mailOptions);
-      console.log("Email sent to:", email);
-      
-      return res.status(201).json({ 
-        message: 'Account created successfully! Please check your email to verify.' 
-      });
-    } catch (mailError: any) {
-      console.error("Nodemailer Error:", mailError.message);
-      return res.status(500).json({ message: "Account created but email failed: " + mailError.message });
-    }
+    transporter.sendMail(mailOptions).then(() => {
+      console.log("Email sent successfully in background");
+    }).catch((err) => {
+      console.error("Background Email Error:", err.message);
+    });
+    return res.status(201).json({ 
+      message: 'Account created successfully! Please check your email (it may take a minute).' 
+    });
 
   } catch (error: any) {
     console.error("Register Error:", error);
     res.status(500).json({ message: 'Server Error: ' + error.message });
   }
 };
-
 export const companyRegister = async (req: Request, res: Response) => {
   const { 
     companyName, 
