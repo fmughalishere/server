@@ -6,12 +6,14 @@ import crypto from 'crypto';
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
-    secure: true,
+    secure: false,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
     },
-    connectionTimeout: 10000,
+    tls: {
+        rejectUnauthorized: false
+    }
 });
 export const register = async (req, res) => {
     const { name, email, password, role } = req.body;
@@ -36,14 +38,17 @@ export const register = async (req, res) => {
             subject: "Verify Your Account - EasyJobsPK",
             html: `<p>Hello ${name}, click here to verify: <a href="${verificationLink}">${verificationLink}</a></p>`,
         };
-        transporter.sendMail(mailOptions).then(() => {
-            console.log("Email sent successfully in background");
-        }).catch((err) => {
-            console.error("Background Email Error:", err.message);
-        });
-        return res.status(201).json({
-            message: 'Account created successfully! Please check your email (it may take a minute).'
-        });
+        try {
+            await transporter.sendMail(mailOptions);
+            console.log("Email sent successfully to:", email);
+            return res.status(201).json({
+                message: 'Account created successfully! Please check your email.'
+            });
+        }
+        catch (mailError) {
+            console.error("Nodemailer Error:", mailError.message);
+            return res.status(500).json({ message: "Account created but Email Failed: " + mailError.message });
+        }
     }
     catch (error) {
         console.error("Register Error:", error);
@@ -58,39 +63,18 @@ export const companyRegister = async (req, res) => {
             return res.status(400).json({ message: 'Email already exists' });
         const hashedPassword = await bcrypt.hash(password, 10);
         const verificationToken = crypto.randomBytes(32).toString('hex');
-        const company = await User.create({
-            name: companyName,
-            email,
-            password: hashedPassword,
-            role: 'employer',
-            phone,
-            website,
-            lat,
-            lng,
-            location,
-            city,
-            industry,
-            companySize,
-            description,
-            contactPerson,
-            designation,
-            logo,
-            verificationToken,
-            isVerified: false
+        await User.create({
+            name: companyName, email, password: hashedPassword,
+            role: 'employer', phone, website, lat, lng, location, city,
+            industry, companySize, description, contactPerson, designation,
+            logo, verificationToken, isVerified: false
         });
         const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
         const mailOptions = {
             from: `"EasyJobsPK" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Verify Your Company Account - EasyJobsPK",
-            html: `
-        <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-          <h2 style="color: #00004d;">Welcome to EasyJobsPK!</h2>
-          <p>Hello ${companyName},</p>
-          <p>Please click the button below to verify your business account and start hiring.</p>
-          <a href="${verificationLink}" style="background: #00004d; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email Address</a>
-        </div>
-      `,
+            html: `<p>Hello ${companyName}, click here: <a href="${verificationLink}">Verify Email</a></p>`,
         };
         await transporter.sendMail(mailOptions);
         res.status(201).json({
@@ -98,24 +82,22 @@ export const companyRegister = async (req, res) => {
         });
     }
     catch (error) {
-        console.error("Register Error:", error);
-        res.status(500).json({ message: 'Server Error during registration' });
+        console.error("Company Register Error:", error);
+        res.status(500).json({ message: 'Server Error: ' + error.message });
     }
 };
 export const verifyEmail = async (req, res) => {
     const token = req.query.token;
     try {
         const user = await User.findOne({ verificationToken: token });
-        if (!user) {
+        if (!user)
             return res.status(400).json({ message: 'Invalid or expired token' });
-        }
         user.isVerified = true;
         user.verificationToken = null;
         await user.save();
         res.status(200).json({ message: 'Email verified successfully! You can now login.' });
     }
     catch (error) {
-        console.error("Verification Error:", error);
         res.status(500).json({ message: 'Verification error' });
     }
 };
@@ -125,25 +107,15 @@ export const login = async (req, res) => {
         const user = await User.findOne({ email });
         if (!user)
             return res.status(400).json({ message: 'Invalid Credentials' });
-        if (!user.isVerified) {
-            return res.status(401).json({ message: 'Please verify your email before logging in.' });
-        }
-        if (!user.password) {
-            return res.status(400).json({
-                message: 'This account was created via Google. Please use Google Login.'
-            });
-        }
+        if (!user.isVerified)
+            return res.status(401).json({ message: 'Please verify your email first.' });
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
             return res.status(400).json({ message: 'Invalid Credentials' });
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        res.json({
-            token,
-            user: { id: user._id, name: user.name, role: user.role }
-        });
+        res.json({ token, user: { id: user._id, name: user.name, role: user.role } });
     }
     catch (error) {
-        console.error("Login Error:", error);
         res.status(500).json({ message: 'Server Error' });
     }
 };
