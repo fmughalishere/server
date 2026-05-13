@@ -1,27 +1,9 @@
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import crypto from 'crypto';
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    pool: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
-});
-transporter.verify((error, success) => {
-    if (error) {
-        console.log("Nodemailer Configuration Error: ", error.message);
-    }
-    else {
-        console.log("Email Server is Ready and Verified!");
-    }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 export const register = async (req, res) => {
     const { name, email, password, role } = req.body;
     try {
@@ -30,49 +12,38 @@ export const register = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         const hashedPassword = await bcrypt.hash(password, 10);
         const verificationToken = crypto.randomBytes(32).toString('hex');
-        const user = await User.create({
-            name,
-            email,
-            password: hashedPassword,
+        await User.create({
+            name, email, password: hashedPassword,
             role: role || 'jobseeker',
-            verificationToken,
-            isVerified: false
+            verificationToken, isVerified: false
         });
         const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
-        const mailOptions = {
-            from: `"EasyJobsPK" <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: "Verify Your Account - EasyJobsPK",
-            html: `
-        <div style="font-family: sans-serif; padding: 20px; color: #333;">
-          <h2>Welcome to EasyJobsPK!</h2>
-          <p>Hello ${name}, please verify your email address to activate your account.</p>
-          <a href="${verificationLink}" style="background: #00004d; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Verify Email Address</a>
-          <p style="margin-top: 20px; font-size: 12px; color: #777;">If the button doesn't work, copy-paste this link: <br/> ${verificationLink}</p>
-        </div>
-      `,
-        };
         try {
-            await transporter.sendMail(mailOptions);
-            console.log("Verification Email sent successfully to:", email);
-            return res.status(201).json({
-                message: 'Account created successfully! Verification email sent.'
+            console.log("Attempting to send email via Resend to:", email);
+            const { data, error } = await resend.emails.send({
+                from: 'EasyJobsPK <onboarding@resend.dev>',
+                to: email,
+                subject: 'Verify Your Account - EasyJobsPK',
+                html: `<p>Hello ${name}, click here: <a href="${verificationLink}">${verificationLink}</a></p>`,
             });
+            if (error) {
+                console.error("Resend API Error Detail:", error);
+                return res.status(201).json({ message: 'Account created, but email failed: ' + error.message });
+            }
+            console.log("Resend API Success:", data);
+            return res.status(201).json({ message: 'Account created! Verification link sent.' });
         }
         catch (mailError) {
-            console.error("Mail Sending Failed:", mailError.message);
-            return res.status(201).json({
-                message: 'Account created, but we failed to send the email. Please contact support.'
-            });
+            console.error("Resend Catch Error:", mailError.message);
+            return res.status(201).json({ message: 'Account created but Email failed. Check backend logs.' });
         }
     }
     catch (error) {
-        console.error("Register Error:", error);
         res.status(500).json({ message: 'Server Error: ' + error.message });
     }
 };
 export const companyRegister = async (req, res) => {
-    const { companyName, email, password, phone, website, city, lat, lng, location, industry, companySize, description, contactPerson, designation, logo } = req.body;
+    const { companyName, email, password, phone, website, city, industry, companySize, description, contactPerson, designation, logo, lat, lng, location } = req.body;
     try {
         const companyExists = await User.findOne({ email });
         if (companyExists)
@@ -80,33 +51,25 @@ export const companyRegister = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const verificationToken = crypto.randomBytes(32).toString('hex');
         await User.create({
-            name: companyName, email, password: hashedPassword,
-            role: 'employer', phone, website, lat, lng, location, city,
-            industry, companySize, description, contactPerson, designation,
-            logo, verificationToken, isVerified: false
+            name: companyName, email, password: hashedPassword, role: 'employer',
+            phone, website, lat, lng, location, city, industry, companySize,
+            description, contactPerson, designation, logo, verificationToken, isVerified: false
         });
         const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
-        const mailOptions = {
-            from: `"EasyJobsPK" <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: "Verify Your Company Account - EasyJobsPK",
-            html: `<h3>Hello ${companyName},</h3><p>Verify your company account here: <a href="${verificationLink}">Verify Account</a></p>`,
-        };
         try {
-            await transporter.sendMail(mailOptions);
-            res.status(201).json({
-                message: 'Company registered! Please check your email to verify.'
+            await resend.emails.send({
+                from: 'EasyJobsPK <onboarding@resend.dev>',
+                to: email,
+                subject: 'Verify Your Company Account',
+                html: `<p>Hello ${companyName}, verify here: <a href="${verificationLink}">Verify Email</a></p>`,
             });
+            res.status(201).json({ message: 'Company registered! Check email to verify.' });
         }
-        catch (mailError) {
-            console.error("Company Mail Error:", mailError.message);
-            res.status(201).json({
-                message: 'Company registered but verification email failed.'
-            });
+        catch (err) {
+            res.status(201).json({ message: 'Company registered but email failed.' });
         }
     }
     catch (error) {
-        console.error("Company Register Error:", error);
         res.status(500).json({ message: 'Server Error: ' + error.message });
     }
 };
@@ -119,7 +82,7 @@ export const verifyEmail = async (req, res) => {
         user.isVerified = true;
         user.verificationToken = null;
         await user.save();
-        res.status(200).json({ message: 'Email verified successfully! You can now login.' });
+        res.status(200).json({ message: 'Email verified successfully!' });
     }
     catch (error) {
         res.status(500).json({ message: 'Verification error' });
@@ -132,7 +95,7 @@ export const login = async (req, res) => {
         if (!user)
             return res.status(400).json({ message: 'Invalid Credentials' });
         if (!user.isVerified)
-            return res.status(401).json({ message: 'Please verify your email first.' });
+            return res.status(401).json({ message: 'Please verify email first.' });
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
             return res.status(400).json({ message: 'Invalid Credentials' });
@@ -146,9 +109,7 @@ export const login = async (req, res) => {
 export const getSavedJobs = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).populate('savedJobs');
-        if (!user)
-            return res.status(404).json({ message: "User not found" });
-        res.status(200).json(user.savedJobs);
+        res.status(200).json(user ? user.savedJobs : []);
     }
     catch (error) {
         res.status(500).json({ message: "Error fetching saved jobs" });
