@@ -4,12 +4,21 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+    service: 'gmail',
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
+transporter.verify((error, success) => {
+    if (error) {
+        console.log("Mail Connection Error: ", error.message);
+    }
+    else {
+        console.log("Email Server Ready!");
     }
 });
 export const register = async (req, res) => {
