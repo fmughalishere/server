@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
     secure: true,
     auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.qlpvciohlphczxrs,
+        pass: process.env.EMAIL_PASS,
     }
 });
 export const register = async (req, res) => {
