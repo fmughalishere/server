@@ -13,10 +13,8 @@ router.get('/users', adminCtrl.getAllUsers);
 router.patch('/users/approve-employer/:id', adminCtrl.toggleEmployerStatus);
 router.delete('/users/:id', adminCtrl.deleteUser);
 
-router.get('/jobs', adminCtrl.getAllJobs);
 router.delete('/jobs/:id', adminCtrl.deleteJob);
 
-router.get('/applications', adminCtrl.getAllApplications);
 router.patch('/applications/status/:id', adminCtrl.updateApplicationStatus);
 
 export default router;
