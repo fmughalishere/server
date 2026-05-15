@@ -3,7 +3,8 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "jobseeker" | "employer";
+    role: "user" | "employer" | "admin";
+    isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
@@ -34,7 +35,8 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "jobseeker" | "employer";
+    role: "user" | "employer" | "admin";
+    isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
@@ -67,7 +69,8 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "jobseeker" | "employer";
+    role: "user" | "employer" | "admin";
+    isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
@@ -104,7 +107,8 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "jobseeker" | "employer";
+    role: "user" | "employer" | "admin";
+    isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
@@ -133,7 +137,8 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "jobseeker" | "employer";
+    role: "user" | "employer" | "admin";
+    isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
@@ -166,7 +171,8 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "jobseeker" | "employer";
+    role: "user" | "employer" | "admin";
+    isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
@@ -204,7 +210,8 @@ declare const User: mongoose.Model<{
         name: string;
         email: string;
         password: string;
-        role: "jobseeker" | "employer";
+        role: "user" | "employer" | "admin";
+        isApproved: boolean;
         isVerified: boolean;
         savedJobs: mongoose.Types.ObjectId[];
         googleId?: string | null;
@@ -237,7 +244,8 @@ declare const User: mongoose.Model<{
         name: string;
         email: string;
         password: string;
-        role: "jobseeker" | "employer";
+        role: "user" | "employer" | "admin";
+        isApproved: boolean;
         isVerified: boolean;
         savedJobs: mongoose.Types.ObjectId[];
         googleId?: string | null;
@@ -273,7 +281,8 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "jobseeker" | "employer";
+    role: "user" | "employer" | "admin";
+    isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;
@@ -308,7 +317,8 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "jobseeker" | "employer";
+    role: "user" | "employer" | "admin";
+    isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
     googleId?: string | null;

@@ -7,13 +7,11 @@ const userSchema = new mongoose.Schema({
 
   googleId: { type: String },
   avatar: { type: String },
-
-  role: {
-    type: String,
-    enum: ['jobseeker', 'employer'],
-    default: 'jobseeker'
-  },
-
+  role: { type: String,
+  enum: ['user', 'employer', 'admin'],
+  default: 'user' 
+},
+  isApproved: { type: Boolean, default: false },
   isVerified: { type: Boolean, default: false },
   verificationToken: { type: String },
 
