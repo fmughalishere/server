@@ -41,26 +41,25 @@ app.use('/api/admin', adminRoutes);
 const activeVisitors = new Map();
 
 io.on("connection", (socket) => {
-  console.log("New connection established:", socket.id);
+  console.log("New User Connected:", socket.id);
   socket.emit("updateVisitorsList", Array.from(activeVisitors.values()));
 
   socket.on("registerVisitor", (userData) => {
     activeVisitors.set(socket.id, {
       id: socket.id,
-      name: userData.name || "Guest Visitor",
-      role: userData.role || "Browsing",
-      location: userData.location || "Unknown Location"
+      name: userData.name,
+      role: userData.role,
+      location: userData.location
     });
 
-    console.log(`Visitor registered: ${userData.name || "Guest"} from ${userData.location}`);
+    console.log(`Live Now: ${activeVisitors.size}`);
     io.emit("updateVisitorsList", Array.from(activeVisitors.values()));
   });
 
   socket.on("disconnect", () => {
     if (activeVisitors.has(socket.id)) {
-      const visitor = activeVisitors.get(socket.id);
-      console.log(`Visitor disconnected: ${visitor.name}`);
       activeVisitors.delete(socket.id);
+      console.log(`User Left. Total: ${activeVisitors.size}`);
       io.emit("updateVisitorsList", Array.from(activeVisitors.values()));
     }
   });
