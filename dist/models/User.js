@@ -5,8 +5,9 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     googleId: { type: String },
     avatar: { type: String },
-    role: { type: String,
-        enum: ['user', 'employer', 'admin'],
+    role: {
+        type: String,
+        enum: ['user', 'employer', 'cheifAdmin', 'subAdmin'],
         default: 'user'
     },
     isApproved: { type: Boolean, default: false },

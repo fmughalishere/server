@@ -7,10 +7,11 @@ const userSchema = new mongoose.Schema({
 
   googleId: { type: String },
   avatar: { type: String },
-  role: { type: String,
-  enum: ['user', 'employer', 'admin'],
-  default: 'user' 
-},
+  role: { 
+    type: String,
+    enum: ['user', 'employer', 'cheifAdmin', 'subAdmin'],
+    default: 'user' 
+  },
   isApproved: { type: Boolean, default: false },
   isVerified: { type: Boolean, default: false },
   verificationToken: { type: String },
@@ -44,5 +45,4 @@ const userSchema = new mongoose.Schema({
 userSchema.index({ email: 1 });
 
 const User = mongoose.model('User', userSchema);
-
 export default User;

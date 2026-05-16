@@ -3,7 +3,7 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "user" | "employer" | "admin";
+    role: "user" | "employer" | "cheifAdmin" | "subAdmin";
     isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
@@ -35,7 +35,7 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "user" | "employer" | "admin";
+    role: "user" | "employer" | "cheifAdmin" | "subAdmin";
     isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
@@ -69,7 +69,7 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "user" | "employer" | "admin";
+    role: "user" | "employer" | "cheifAdmin" | "subAdmin";
     isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
@@ -107,7 +107,7 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "user" | "employer" | "admin";
+    role: "user" | "employer" | "cheifAdmin" | "subAdmin";
     isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
@@ -137,7 +137,7 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "user" | "employer" | "admin";
+    role: "user" | "employer" | "cheifAdmin" | "subAdmin";
     isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
@@ -171,7 +171,7 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "user" | "employer" | "admin";
+    role: "user" | "employer" | "cheifAdmin" | "subAdmin";
     isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
@@ -210,7 +210,7 @@ declare const User: mongoose.Model<{
         name: string;
         email: string;
         password: string;
-        role: "user" | "employer" | "admin";
+        role: "user" | "employer" | "cheifAdmin" | "subAdmin";
         isApproved: boolean;
         isVerified: boolean;
         savedJobs: mongoose.Types.ObjectId[];
@@ -244,7 +244,7 @@ declare const User: mongoose.Model<{
         name: string;
         email: string;
         password: string;
-        role: "user" | "employer" | "admin";
+        role: "user" | "employer" | "cheifAdmin" | "subAdmin";
         isApproved: boolean;
         isVerified: boolean;
         savedJobs: mongoose.Types.ObjectId[];
@@ -281,7 +281,7 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "user" | "employer" | "admin";
+    role: "user" | "employer" | "cheifAdmin" | "subAdmin";
     isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
@@ -317,7 +317,7 @@ declare const User: mongoose.Model<{
     name: string;
     email: string;
     password: string;
-    role: "user" | "employer" | "admin";
+    role: "user" | "employer" | "cheifAdmin" | "subAdmin";
     isApproved: boolean;
     isVerified: boolean;
     savedJobs: mongoose.Types.ObjectId[];
