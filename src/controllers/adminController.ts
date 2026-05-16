@@ -54,3 +54,43 @@ export const updateApplicationStatus = async (req: Request, res: Response) => {
     await Application.findByIdAndUpdate(id, { status });
     res.json({ message: "Application status updated" });
 };
+
+export const getGraphStats = async (req: Request, res: Response) => {
+    try {
+        const graphData = await User.aggregate([
+            {
+                $group: {
+                    _id: {
+                        month: { $month: "$createdAt" },
+                        role: "$role"
+                    },
+                    count: { $sum: 1 }
+                }
+            },
+            { $sort: { "_id.month": 1 } }
+        ]);
+        const monthNames = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedData = monthNames.slice(1).map((month, index) => {
+            const monthNum = index + 1;
+            const applicants = graphData.find(d => d._id.month === monthNum && d._id.role === 'user')?.count || 0;
+            const employers = graphData.find(d => d._id.month === monthNum && d._id.role === 'employer')?.count || 0;
+            return { month, applicants, employers };
+        });
+
+        res.json(formattedData);
+    } catch (error) {
+        res.status(500).json({ message: "Graph error" });
+    }
+};
+
+export const getActiveVisitors = async (req: Request, res: Response) => {
+    try {
+        const recentUsers = await User.find()
+            .select('name role location city createdAt')
+            .sort({ createdAt: -1 })
+            .limit(6);
+        res.json(recentUsers);
+    } catch (error) {
+        res.status(500).json({ message: "Visitor error" });
+    }
+};

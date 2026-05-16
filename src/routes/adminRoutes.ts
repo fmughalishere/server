@@ -17,4 +17,7 @@ router.delete('/jobs/:id', adminCtrl.deleteJob);
 
 router.patch('/applications/status/:id', adminCtrl.updateApplicationStatus);
 
+router.get('/graph-stats', adminCtrl.getGraphStats);
+router.get('/active-visitors', adminCtrl.getActiveVisitors);
+
 export default router;
