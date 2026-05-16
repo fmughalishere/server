@@ -51,13 +51,6 @@ export const isJobSeeker = (req: AuthRequest, res: Response, next: NextFunction)
   }
 };
 
-export const isAdmin = (req: AuthRequest, res: Response, next: NextFunction) => {
-    if (req.user && req.user.role === 'admin') {
-      next();
-    } else {
-      return res.status(403).json({ message: 'Access denied. Admin only.' });
-    }
-  };
 
 export const adminMiddleware = (req: any, res: any, next: any) => {
   const allowedRoles = ['cheifAdmin', 'subAdmin', 'admin'];
