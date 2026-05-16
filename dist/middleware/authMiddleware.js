@@ -50,11 +50,12 @@ export const isAdmin = (req, res, next) => {
     }
 };
 export const adminMiddleware = (req, res, next) => {
-    if (req.user && req.user.role === 'admin') {
+    const allowedRoles = ['cheifAdmin', 'subAdmin', 'admin'];
+    if (req.user && allowedRoles.includes(req.user.role)) {
         next();
     }
     else {
-        res.status(403).json({ message: "Access denied. Admins only." });
+        res.status(403).json({ message: "Access Denied: You do not have admin privileges" });
     }
 };
 export const authMiddleware = protect;
