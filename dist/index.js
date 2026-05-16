@@ -26,7 +26,6 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
@@ -36,14 +35,15 @@ app.use('/api/admin', adminRoutes);
 const activeVisitors = new Map();
 io.on("connection", (socket) => {
     console.log("New connection established:", socket.id);
+    socket.emit("updateVisitorsList", Array.from(activeVisitors.values()));
     socket.on("registerVisitor", (userData) => {
         activeVisitors.set(socket.id, {
-            _id: socket.id,
-            name: userData.name || "Guest User",
+            id: socket.id,
+            name: userData.name || "Guest Visitor",
             role: userData.role || "Browsing",
             location: userData.location || "Unknown Location"
         });
-        console.log(`Visitor registered: ${userData.name} from ${userData.location}`);
+        console.log(`Visitor registered: ${userData.name || "Guest"} from ${userData.location}`);
         io.emit("updateVisitorsList", Array.from(activeVisitors.values()));
     });
     socket.on("disconnect", () => {
