@@ -5,7 +5,8 @@ import {
   getMyJobs, 
   getJobById,
   getSavedJobs, 
-  toggleSaveJob 
+  toggleSaveJob,
+  updateJobStatus
 } from '../controllers/jobController.js';
 import { authMiddleware, protect } from '../middleware/authMiddleware.js';
 
@@ -17,5 +18,6 @@ router.get('/saved-jobs', protect, getSavedJobs);
 router.get('/:id', getJobById);
 router.post('/', authMiddleware, postJob);
 router.post('/save/:jobId', protect, toggleSaveJob);
+router.patch('/admin/jobs/status/:id', protect, updateJobStatus);
 
 export default router;

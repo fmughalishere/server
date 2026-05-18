@@ -66,10 +66,10 @@ export const cheifadminRegister = async (req: Request, res: Response) => {
         await resend.emails.send({
           from: 'EasyJobsPK <onboarding@resend.dev>',
           to: email,
-          subject: 'Chief Admin Verification',
-          html: `<p>Hello ${name}, verify your Chief Admin account: <a href="${verificationLink}">Verify Now</a></p>`,
+          subject: 'Cheif Admin Verification',
+          html: `<p>Hello ${name}, verify your Cheif Admin account: <a href="${verificationLink}">Verify Now</a></p>`,
         });
-        return res.status(201).json({ message: 'Chief Admin registered! Check email.' });
+        return res.status(201).json({ message: 'Cheif Admin registered! Check email.' });
     } catch (mailError: any) {
         return res.status(201).json({ message: 'Admin created but email failed.' });
     }

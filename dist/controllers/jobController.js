@@ -104,4 +104,17 @@ export const getSavedJobs = async (req, res) => {
         res.status(500).json({ message: "Error fetching saved jobs" });
     }
 };
+export const updateJobStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const job = await Job.findByIdAndUpdate(id, { status }, { new: true });
+        if (!job)
+            return res.status(404).json({ message: "Job not found" });
+        res.status(200).json({ message: "Job status updated", job });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error updating status", error: error.message });
+    }
+};
 //# sourceMappingURL=jobController.js.map
