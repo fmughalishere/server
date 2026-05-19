@@ -107,13 +107,6 @@ export const getAllApplications = async (req: Request, res: Response) => {
     res.json(apps);
 };
 
-export const updateApplicationStatus = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { status } = req.body;
-    await Application.findByIdAndUpdate(id, { status });
-    res.json({ message: "Application status updated" });
-};
-
 export const getGraphStats = async (req: Request, res: Response) => {
     try {
         const graphData = await User.aggregate([

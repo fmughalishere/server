@@ -21,6 +21,4 @@ router.delete('/users/:id', adminCtrl.deleteUser);
 
 router.delete('/jobs/:id', adminCtrl.deleteJob);
 
-router.patch('/applications/status/:id', adminCtrl.updateApplicationStatus);
-
 export default router;

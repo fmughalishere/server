@@ -149,4 +149,18 @@ export const sendJobOffer = async (req, res) => {
         res.status(500).json({ message: "Server Error" });
     }
 };
+export const deleteApplication = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ApplicationModel = Application;
+        const deletedApp = await ApplicationModel.findByIdAndDelete(id);
+        if (!deletedApp) {
+            return res.status(404).json({ message: "Application not found" });
+        }
+        res.status(200).json({ message: "Application deleted successfully" });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error deleting application" });
+    }
+};
 //# sourceMappingURL=applicationController.js.map
