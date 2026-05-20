@@ -185,3 +185,30 @@ export const deleteApplication = async (req: any, res: Response) => {
         res.status(500).json({ message: "Error deleting application" });
     }
 };
+
+export const toggleSaveApplicant = async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user._id || req.user.id;
+    const application = await (Application as any).findById(id);
+    if (!application) return res.status(404).json({ message: "Applicant not found" });
+    if (!application.savedBy) application.savedBy = [];
+
+    const isSaved = application.savedBy.includes(userId);
+
+    if (isSaved) {
+      application.savedBy = application.savedBy.filter((uid: any) => uid.toString() !== userId.toString());
+    } else {
+      application.savedBy.push(userId);
+    }
+
+    await application.save();
+    res.status(200).json({ 
+      message: isSaved ? "Removed from saved" : "Saved successfully",
+      isSaved: !isSaved,
+      savedBy: application.savedBy 
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};

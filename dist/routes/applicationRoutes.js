@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { createApplication, getMyApplications, getJobseekerStats, getSingleApplication, getEmployerApplicants, updateApplicationStatus, sendJobOffer, deleteApplication } from '../controllers/applicationController.js';
+import { createApplication, getMyApplications, getJobseekerStats, getSingleApplication, getEmployerApplicants, updateApplicationStatus, sendJobOffer, deleteApplication, toggleSaveApplicant } from '../controllers/applicationController.js';
 import { protect } from '../middleware/authMiddleware.js';
 router.post('/', protect, createApplication);
 router.get('/all-applicants', getEmployerApplicants);
@@ -10,5 +10,6 @@ router.get('/my-applications', protect, getMyApplications);
 router.get('/:id', getSingleApplication);
 router.post('/:id/offer', protect, sendJobOffer);
 router.delete('/:id', protect, deleteApplication);
+router.patch('/:id/save', protect, toggleSaveApplicant);
 export default router;
 //# sourceMappingURL=applicationRoutes.js.map

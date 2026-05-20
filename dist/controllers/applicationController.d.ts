@@ -7,4 +7,5 @@ export declare const createApplication: (req: any, res: any) => Promise<void>;
 export declare const getSingleApplication: (req: any, res: any) => Promise<any>;
 export declare const sendJobOffer: (req: any, res: any) => Promise<any>;
 export declare const deleteApplication: (req: any, res: Response) => Promise<Response<any, Record<string, any>> | undefined>;
+export declare const toggleSaveApplicant: (req: any, res: any) => Promise<any>;
 //# sourceMappingURL=applicationController.d.ts.map

@@ -30,6 +30,7 @@ const applicationSchema = new mongoose.Schema({
   yearsOfExperience: { type: Number },
   salaryDemand: {type: String },
   experience: [experienceSchema],
+  savedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
    status: {
     type: String,
     enum: ['pending', 'shortlisted', 'rejected', 'Offered'],

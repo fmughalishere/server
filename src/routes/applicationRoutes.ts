@@ -8,7 +8,8 @@ import {
     getEmployerApplicants, 
     updateApplicationStatus,
     sendJobOffer,
-    deleteApplication
+    deleteApplication,
+    toggleSaveApplicant
 } from '../controllers/applicationController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -20,5 +21,6 @@ router.get('/my-applications', protect, getMyApplications);
 router.get('/:id', getSingleApplication);
 router.post('/:id/offer', protect, sendJobOffer);
 router.delete('/:id', protect, deleteApplication);
+router.patch('/:id/save', protect, toggleSaveApplicant);
 
 export default router;
