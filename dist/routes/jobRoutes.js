@@ -8,6 +8,6 @@ router.get('/saved-jobs', protect, getSavedJobs);
 router.get('/:id', getJobById);
 router.post('/', authMiddleware, postJob);
 router.post('/save/:jobId', protect, toggleSaveJob);
-router.patch('/admin/jobs/status/:id', protect, updateJobStatus);
+router.patch('/status/:id', protect, updateJobStatus);
 export default router;
 //# sourceMappingURL=jobRoutes.js.map
