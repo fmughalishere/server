@@ -9,13 +9,13 @@ declare const _default: mongoose.Model<{
     companyName: string;
     postedBy: mongoose.Types.ObjectId;
     companyEmail: string;
-    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
+    companyAddress?: string | null;
     salary?: string | null;
 }, {}, {}, {
     id: string;
@@ -29,13 +29,13 @@ declare const _default: mongoose.Model<{
     companyName: string;
     postedBy: mongoose.Types.ObjectId;
     companyEmail: string;
-    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
+    companyAddress?: string | null;
     salary?: string | null;
 }, {
     id: string;
@@ -49,13 +49,13 @@ declare const _default: mongoose.Model<{
     companyName: string;
     postedBy: mongoose.Types.ObjectId;
     companyEmail: string;
-    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
+    companyAddress?: string | null;
     salary?: string | null;
 } & {
     _id: mongoose.Types.ObjectId;
@@ -73,13 +73,13 @@ declare const _default: mongoose.Model<{
     companyName: string;
     postedBy: mongoose.Types.ObjectId;
     companyEmail: string;
-    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
+    companyAddress?: string | null;
     salary?: string | null;
 }, mongoose.Document<unknown, {}, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
@@ -91,13 +91,13 @@ declare const _default: mongoose.Model<{
     companyName: string;
     postedBy: mongoose.Types.ObjectId;
     companyEmail: string;
-    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
+    companyAddress?: string | null;
     salary?: string | null;
 }, {
     id: string;
@@ -111,13 +111,13 @@ declare const _default: mongoose.Model<{
     companyName: string;
     postedBy: mongoose.Types.ObjectId;
     companyEmail: string;
-    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
+    companyAddress?: string | null;
     salary?: string | null;
 } & {
     _id: mongoose.Types.ObjectId;
@@ -138,13 +138,13 @@ declare const _default: mongoose.Model<{
         companyName: string;
         postedBy: mongoose.Types.ObjectId;
         companyEmail: string;
-        companyAddress: string;
         category: string;
         education: string;
         status: "active" | "closed";
         description?: string | null;
         experience?: string | null;
         companyLogo?: string | null;
+        companyAddress?: string | null;
         salary?: string | null;
     }, {
         id: string;
@@ -158,13 +158,13 @@ declare const _default: mongoose.Model<{
         companyName: string;
         postedBy: mongoose.Types.ObjectId;
         companyEmail: string;
-        companyAddress: string;
         category: string;
         education: string;
         status: "active" | "closed";
         description?: string | null;
         experience?: string | null;
         companyLogo?: string | null;
+        companyAddress?: string | null;
         salary?: string | null;
     } & {
         _id: mongoose.Types.ObjectId;
@@ -183,13 +183,13 @@ declare const _default: mongoose.Model<{
     companyName: string;
     postedBy: mongoose.Types.ObjectId;
     companyEmail: string;
-    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
+    companyAddress?: string | null;
     salary?: string | null;
 } & {
     _id: mongoose.Types.ObjectId;
@@ -205,13 +205,13 @@ declare const _default: mongoose.Model<{
     companyName: string;
     postedBy: mongoose.Types.ObjectId;
     companyEmail: string;
-    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
+    companyAddress?: string | null;
     salary?: string | null;
 } & {
     _id: mongoose.Types.ObjectId;

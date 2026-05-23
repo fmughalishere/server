@@ -6,7 +6,7 @@ const jobSchema = new mongoose.Schema({
   companyName: { type: String, required: true },
   contactPerson: { type: String, required: true },
   companyEmail: { type: String, required: true },
-  companyAddress: { type: String, required: true },
+  companyAddress: { type: String },
   designation: { type: String, required: true },
   phone: { type: Number, required: true },
   category: { type: String, required: true },
