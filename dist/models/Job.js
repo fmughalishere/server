@@ -14,7 +14,7 @@ const jobSchema = new mongoose.Schema({
     city: { type: String, required: true },
     salary: { type: String },
     experience: { type: String },
-    status: { type: String, enum: ['active', 'closed'], default: 'active' },
+    status: { type: String, enum: ['active', 'pending', 'closed'], default: 'pending' },
     type: {
         type: String,
         enum: ['Full-Time', 'Part-Time', 'One-Day Task', 'Remote-Job', 'Home-Based', 'Contract-Based'],

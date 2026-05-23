@@ -47,7 +47,7 @@ export const postJob = async (req, res) => {
 export const getAllJobs = async (req, res) => {
     try {
         const { city, title, category, type } = req.query;
-        let query = {};
+        let query = { status: 'active' };
         if (city)
             query.city = new RegExp(city, 'i');
         if (title)

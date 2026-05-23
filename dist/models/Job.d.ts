@@ -11,7 +11,7 @@ declare const _default: mongoose.Model<{
     companyEmail: string;
     category: string;
     education: string;
-    status: "active" | "closed";
+    status: "active" | "pending" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
@@ -31,7 +31,7 @@ declare const _default: mongoose.Model<{
     companyEmail: string;
     category: string;
     education: string;
-    status: "active" | "closed";
+    status: "active" | "pending" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
@@ -51,7 +51,7 @@ declare const _default: mongoose.Model<{
     companyEmail: string;
     category: string;
     education: string;
-    status: "active" | "closed";
+    status: "active" | "pending" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
@@ -75,7 +75,7 @@ declare const _default: mongoose.Model<{
     companyEmail: string;
     category: string;
     education: string;
-    status: "active" | "closed";
+    status: "active" | "pending" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
@@ -93,7 +93,7 @@ declare const _default: mongoose.Model<{
     companyEmail: string;
     category: string;
     education: string;
-    status: "active" | "closed";
+    status: "active" | "pending" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
@@ -113,7 +113,7 @@ declare const _default: mongoose.Model<{
     companyEmail: string;
     category: string;
     education: string;
-    status: "active" | "closed";
+    status: "active" | "pending" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
@@ -140,7 +140,7 @@ declare const _default: mongoose.Model<{
         companyEmail: string;
         category: string;
         education: string;
-        status: "active" | "closed";
+        status: "active" | "pending" | "closed";
         description?: string | null;
         experience?: string | null;
         companyLogo?: string | null;
@@ -160,7 +160,7 @@ declare const _default: mongoose.Model<{
         companyEmail: string;
         category: string;
         education: string;
-        status: "active" | "closed";
+        status: "active" | "pending" | "closed";
         description?: string | null;
         experience?: string | null;
         companyLogo?: string | null;
@@ -185,7 +185,7 @@ declare const _default: mongoose.Model<{
     companyEmail: string;
     category: string;
     education: string;
-    status: "active" | "closed";
+    status: "active" | "pending" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
@@ -207,7 +207,7 @@ declare const _default: mongoose.Model<{
     companyEmail: string;
     category: string;
     education: string;
-    status: "active" | "closed";
+    status: "active" | "pending" | "closed";
     description?: string | null;
     experience?: string | null;
     companyLogo?: string | null;
