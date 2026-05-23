@@ -1,10 +1,15 @@
 import mongoose from 'mongoose';
 declare const _default: mongoose.Model<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    phone: number;
     city: string;
+    contactPerson: string;
+    designation: string;
     skills: string[];
+    companyName: string;
     postedBy: mongoose.Types.ObjectId;
-    company: string;
+    companyEmail: string;
+    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
@@ -16,10 +21,15 @@ declare const _default: mongoose.Model<{
     id: string;
 }, mongoose.Document<unknown, {}, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    phone: number;
     city: string;
+    contactPerson: string;
+    designation: string;
     skills: string[];
+    companyName: string;
     postedBy: mongoose.Types.ObjectId;
-    company: string;
+    companyEmail: string;
+    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
@@ -31,10 +41,15 @@ declare const _default: mongoose.Model<{
     id: string;
 }, mongoose.DefaultSchemaOptions> & Omit<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    phone: number;
     city: string;
+    contactPerson: string;
+    designation: string;
     skills: string[];
+    companyName: string;
     postedBy: mongoose.Types.ObjectId;
-    company: string;
+    companyEmail: string;
+    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
@@ -50,10 +65,15 @@ declare const _default: mongoose.Model<{
     id: string;
 }, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    phone: number;
     city: string;
+    contactPerson: string;
+    designation: string;
     skills: string[];
+    companyName: string;
     postedBy: mongoose.Types.ObjectId;
-    company: string;
+    companyEmail: string;
+    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
@@ -63,10 +83,15 @@ declare const _default: mongoose.Model<{
     salary?: string | null;
 }, mongoose.Document<unknown, {}, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    phone: number;
     city: string;
+    contactPerson: string;
+    designation: string;
     skills: string[];
+    companyName: string;
     postedBy: mongoose.Types.ObjectId;
-    company: string;
+    companyEmail: string;
+    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
@@ -78,10 +103,15 @@ declare const _default: mongoose.Model<{
     id: string;
 }, mongoose.DefaultSchemaOptions> & Omit<{
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    phone: number;
     city: string;
+    contactPerson: string;
+    designation: string;
     skills: string[];
+    companyName: string;
     postedBy: mongoose.Types.ObjectId;
-    company: string;
+    companyEmail: string;
+    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
@@ -100,10 +130,15 @@ declare const _default: mongoose.Model<{
 } | {
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+        phone: number;
         city: string;
+        contactPerson: string;
+        designation: string;
         skills: string[];
+        companyName: string;
         postedBy: mongoose.Types.ObjectId;
-        company: string;
+        companyEmail: string;
+        companyAddress: string;
         category: string;
         education: string;
         status: "active" | "closed";
@@ -115,10 +150,15 @@ declare const _default: mongoose.Model<{
         id: string;
     }, mongoose.DefaultSchemaOptions> & Omit<{
         type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+        phone: number;
         city: string;
+        contactPerson: string;
+        designation: string;
         skills: string[];
+        companyName: string;
         postedBy: mongoose.Types.ObjectId;
-        company: string;
+        companyEmail: string;
+        companyAddress: string;
         category: string;
         education: string;
         status: "active" | "closed";
@@ -135,10 +175,15 @@ declare const _default: mongoose.Model<{
     }> | undefined;
 }, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    phone: number;
     city: string;
+    contactPerson: string;
+    designation: string;
     skills: string[];
+    companyName: string;
     postedBy: mongoose.Types.ObjectId;
-    company: string;
+    companyEmail: string;
+    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";
@@ -152,10 +197,15 @@ declare const _default: mongoose.Model<{
     __v: number;
 }>, {
     type: "Full-Time" | "Part-Time" | "One-Day Task" | "Remote-Job" | "Home-Based" | "Contract-Based";
+    phone: number;
     city: string;
+    contactPerson: string;
+    designation: string;
     skills: string[];
+    companyName: string;
     postedBy: mongoose.Types.ObjectId;
-    company: string;
+    companyEmail: string;
+    companyAddress: string;
     category: string;
     education: string;
     status: "active" | "closed";

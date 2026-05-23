@@ -15,8 +15,13 @@ export const getJobById = async (req, res) => {
 };
 export const postJob = async (req, res) => {
     try {
-        const { description, city, salary, type, category, skills, experience, education } = req.body;
+        const { description, city, salary, type, category, skills, experience, education, phone, companyEmail, companyAddress, contactPerson, companyName } = req.body;
         const jobData = {
+            phone,
+            companyEmail,
+            contactPerson,
+            companyAddress,
+            companyName,
             description,
             city,
             salary,
@@ -26,7 +31,6 @@ export const postJob = async (req, res) => {
             experience,
             education,
             postedBy: req.user.id,
-            company: req.user.companyName || "Company Name"
         };
         const job = await Job.create(jobData);
         res.status(201).json({

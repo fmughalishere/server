@@ -2,7 +2,12 @@ import mongoose from 'mongoose';
 const jobSchema = new mongoose.Schema({
     postedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     companyLogo: { type: String },
-    company: { type: String, required: true },
+    companyName: { type: String, required: true },
+    contactPerson: { type: String, required: true },
+    companyEmail: { type: String, required: true },
+    companyAddress: { type: String, required: true },
+    designation: { type: String, required: true },
+    phone: { type: Number, required: true },
     category: { type: String, required: true },
     description: { type: String },
     education: { type: String, required: true },
