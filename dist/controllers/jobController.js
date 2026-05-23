@@ -46,8 +46,8 @@ export const postJob = async (req, res) => {
 };
 export const getAllJobs = async (req, res) => {
     try {
-        const { city, title, category, type } = req.query;
-        let query = { status: 'active' };
+        const { city, title, category, type, status } = req.query;
+        let query = {};
         if (city)
             query.city = new RegExp(city, 'i');
         if (title)
@@ -56,6 +56,8 @@ export const getAllJobs = async (req, res) => {
             query.category = category;
         if (type)
             query.type = type;
+        if (status)
+            query.status = status;
         const jobs = await Job.find(query)
             .populate('postedBy', 'name companyName')
             .sort({ createdAt: -1 });

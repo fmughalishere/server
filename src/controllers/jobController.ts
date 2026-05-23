@@ -52,13 +52,13 @@ export const postJob = async (req: any, res: Response) => {
 
 export const getAllJobs = async (req: Request, res: Response) => {
   try {
-    const { city, title, category, type } = req.query;
-    let query: any = { status: 'active' };
-
+    const { city, title, category, type, status } = req.query;
+    let query: any = {};
     if (city) query.city = new RegExp(city as string, 'i');
     if (title) query.title = new RegExp(title as string, 'i');
     if (category) query.category = category;
     if (type) query.type = type;
+    if (status) query.status = status;
 
     const jobs = await Job.find(query)
       .populate('postedBy', 'name companyName')
