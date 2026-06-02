@@ -19,7 +19,6 @@ export const updateUserProfile = async (req: any, res: Response) => {
         if (!user) return res.status(404).json({ message: "User not found" });
         if (user.role === 'user') {
             if (name) user.name = name;
-            if (email) user.email = email;
             if (avatar) user.avatar = avatar;
             if (!user.profile) {
                 user.profile = { skills: [], city: null, resume: null, bio: null, experience: null };
@@ -29,7 +28,6 @@ export const updateUserProfile = async (req: any, res: Response) => {
         }
         if (user.role === 'employer') {
             if (name) user.name = name;
-            if (email) user.email = email;
             if (phone) user.phone = phone;
             if (website) user.website = website;
             if (city) user.city = city;
