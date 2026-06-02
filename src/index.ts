@@ -13,6 +13,7 @@ import applicationRoutes from './routes/applicationRoutes.js';
 import cityRoutes from './routes/cityRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import userRoutes from './routes/userRoutes.js'
 
 dotenv.config();
 connectDB();
@@ -37,6 +38,7 @@ app.use('/api/applications', applicationRoutes);
 app.use('/api/cities', cityRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/admin', adminRoutes); 
+app.use('/api/user', userRoutes);
 
 const activeVisitors = new Map();
 

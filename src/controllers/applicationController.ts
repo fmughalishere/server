@@ -48,17 +48,20 @@ export const getJobseekerStats = async (req: any, res: Response) => {
     }
 };
 
-export const getMyApplications = async (req: any, res: Response) => {
-    try {
-        const userId = req.user.id;
-        const applications = await (Application as any).find({ applicant: userId } as any)
-            .populate('employer', 'name email phone')
-            .sort({ createdAt: -1 });
+export const getMyApplications = async (req: any, res: any) => {
+  try {
+    const userId = req.user.id;
+    const applications = await Application.find({ applicant: userId } as any)
+      .populate({
+        path: 'job',
+        select: 'title companyName companyLogo location salary type'
+      })
+      .sort({ createdAt: -1 });
 
-        res.status(200).json(applications);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching your applications" });
-    }
+    res.status(200).json(applications);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching your applications" });
+  }
 };
 
 export const createApplication = async (req: any, res: any) => {
