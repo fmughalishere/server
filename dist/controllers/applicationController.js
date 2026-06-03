@@ -45,13 +45,16 @@ export const getJobseekerStats = async (req, res) => {
 export const getMyApplications = async (req, res) => {
     try {
         const userId = req.user.id;
-        const apps = await Application.find({ applicant: userId })
-            .populate('job')
+        const applications = await Application.find({ applicant: userId })
+            .populate({
+            path: 'job',
+            select: 'title companyName companyLogo location salary type'
+        })
             .sort({ createdAt: -1 });
-        res.status(200).json(apps);
+        res.status(200).json(applications);
     }
     catch (error) {
-        res.status(500).json({ message: "Error" });
+        res.status(500).json({ message: "Error fetching your applications" });
     }
 };
 export const createApplication = async (req, res) => {
