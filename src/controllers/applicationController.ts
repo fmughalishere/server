@@ -3,49 +3,59 @@ import { Application } from '../models/Application.js';
 import nodemailer from 'nodemailer';
 
 export const getEmployerApplicants = async (req: any, res: Response) => {
-    try {
-        const applicants = await (Application as any).find({} as any)
-            .sort({ createdAt: -1 });
+  try {
+    const applicants = await (Application as any).find({} as any)
+      .populate({ path: 'jobId', options: { strictPopulate: false } })
+      .sort({ createdAt: -1 });
 
-        res.status(200).json(applicants);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching applicants" });
-    }
+    res.status(200).json(applicants);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching applicants" });
+  }
 };
 
 export const updateApplicationStatus = async (req: any, res: Response) => {
-    try {
-        const { id } = req.params;
-        const { status } = req.body;
-        const application = await (Application as any).findByIdAndUpdate(id, { status }, { new: true } as any)
-            .populate('employer', 'name email phone');
-            
-        res.status(200).json(application);
-    } catch (error) {
-        res.status(500).json({ message: "Error updating status" });
-    }
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const application = await (Application as any).findByIdAndUpdate(id, { status }, { new: true } as any)
+      .populate({ path: 'employer', select: 'name email phone', options: { strictPopulate: false } })
+      .populate({ path: 'jobId', options: { strictPopulate: false } });
+
+    res.status(200).json(application);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating status" });
+  }
 };
 
 export const getJobseekerStats = async (req: any, res: Response) => {
-    try {
-        const userId = req.user.id;
-        const totalApplications = await (Application as any).countDocuments({ applicant: userId } as any);
-        const shortlisted = await (Application as any).countDocuments({ applicant: userId, status: 'shortlisted' } as any);
-        
-        const recentApplications = await (Application as any).find({ applicant: userId } as any)
-            .populate('employer', 'name email phone') 
-            .sort({ createdAt: -1 })
-            .limit(10);
+  try {
+    const userId = req.user.id;
+    const [totalApplications, shortlisted, offered] = await Promise.all([
+      (Application as any).countDocuments({ applicant: userId }),
+      (Application as any).countDocuments({ applicant: userId, status: 'shortlisted' }),
+      (Application as any).countDocuments({ applicant: userId, status: 'Offered' })
+    ]);
 
-        res.status(200).json({
-            user: req.user,
-            totalApplications,
-            shortlisted,
-            recentApplications
-        });
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching jobseeker stats" });
-    }
+    const recentApplications = await (Application as any).find({ applicant: userId } as any)
+      .populate({ path: 'jobId', options: { strictPopulate: false } })
+      .populate({ path: 'employer', select: 'name email phone', options: { strictPopulate: false } })
+      .sort({ createdAt: -1 })
+      .limit(10);
+
+    res.status(200).json({
+      user: req.user,
+      stats: {
+        totalApplications,
+        shortlisted,
+        offered,
+        savedJobs: 0
+      },
+      recentApplications
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching jobseeker stats" });
+  }
 };
 
 export const getMyApplications = async (req: any, res: any) => {
@@ -53,8 +63,9 @@ export const getMyApplications = async (req: any, res: any) => {
     const userId = req.user.id;
     const applications = await Application.find({ applicant: userId } as any)
       .populate({
-        path: 'job',
-        select: 'title companyName companyLogo location salary type'
+        path: 'jobId',
+        select: 'title companyName companyLogo location salary type designation description',
+        options: { strictPopulate: false }
       })
       .sort({ createdAt: -1 });
 
@@ -67,12 +78,15 @@ export const getMyApplications = async (req: any, res: any) => {
 export const createApplication = async (req: any, res: any) => {
   try {
     const {
-      fullName, dob, gender, city, image, jobtype, 
+      jobId,
+      fullName, dob, gender, city, image, jobtype,
       category, education, isFresher, experience, achievements,
       email, phone, whatsapp, salaryDemand
     } = req.body;
+
     const createdApplication = await (Application as any).create({
-      applicant: req.user._id,
+      applicant: req.user._id || req.user.id,
+      jobId,
       fullName,
       dob,
       email,
@@ -91,7 +105,6 @@ export const createApplication = async (req: any, res: any) => {
     } as any);
 
     res.status(201).json(createdApplication);
-
   } catch (error: any) {
     res.status(400).json({ message: error.message || "Failed to create application" });
   }
@@ -100,8 +113,9 @@ export const createApplication = async (req: any, res: any) => {
 export const getSingleApplication = async (req: any, res: any) => {
   try {
     const app = await (Application as any).findById(req.params.id)
-      .populate("applicant", "name email")
-      .populate("employer", "name email phone");
+      .populate({ path: "applicant", select: "name email", options: { strictPopulate: false } })
+      .populate({ path: "jobId", options: { strictPopulate: false } })
+      .populate({ path: "employer", select: "name email phone", options: { strictPopulate: false } });
 
     if (!app) return res.status(404).json({ message: "Not found" });
 
@@ -126,7 +140,7 @@ export const sendJobOffer = async (req: any, res: any) => {
       offeredAt: new Date(),
       employerId: employerId
     };
-    
+
     await application.save();
 
     const transporter = nodemailer.createTransport({
@@ -173,20 +187,18 @@ export const sendJobOffer = async (req: any, res: any) => {
 };
 
 export const deleteApplication = async (req: any, res: Response) => {
-    try {
-        const { id } = req.params;
-        
-        const ApplicationModel = Application as any;
-        const deletedApp = await ApplicationModel.findByIdAndDelete(id);
+  try {
+    const { id } = req.params;
+    const deletedApp = await (Application as any).findByIdAndDelete(id);
 
-        if (!deletedApp) {
-            return res.status(404).json({ message: "Application not found" });
-        }
-
-        res.status(200).json({ message: "Application deleted successfully" });
-    } catch (error: any) {
-        res.status(500).json({ message: "Error deleting application" });
+    if (!deletedApp) {
+      return res.status(404).json({ message: "Application not found" });
     }
+
+    res.status(200).json({ message: "Application deleted successfully" });
+  } catch (error: any) {
+    res.status(500).json({ message: "Error deleting application" });
+  }
 };
 
 export const toggleSaveApplicant = async (req: any, res: any) => {
@@ -206,10 +218,10 @@ export const toggleSaveApplicant = async (req: any, res: any) => {
     }
 
     await application.save();
-    res.status(200).json({ 
+    res.status(200).json({
       message: isSaved ? "Removed from saved" : "Saved successfully",
       isSaved: !isSaved,
-      savedBy: application.savedBy 
+      savedBy: application.savedBy
     });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });

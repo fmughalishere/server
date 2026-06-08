@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 export const getEmployerApplicants = async (req, res) => {
     try {
         const applicants = await Application.find({})
+            .populate({ path: 'jobId', options: { strictPopulate: false } })
             .sort({ createdAt: -1 });
         res.status(200).json(applicants);
     }
@@ -15,7 +16,8 @@ export const updateApplicationStatus = async (req, res) => {
         const { id } = req.params;
         const { status } = req.body;
         const application = await Application.findByIdAndUpdate(id, { status }, { new: true })
-            .populate('employer', 'name email phone');
+            .populate({ path: 'employer', select: 'name email phone', options: { strictPopulate: false } })
+            .populate({ path: 'jobId', options: { strictPopulate: false } });
         res.status(200).json(application);
     }
     catch (error) {
@@ -25,16 +27,24 @@ export const updateApplicationStatus = async (req, res) => {
 export const getJobseekerStats = async (req, res) => {
     try {
         const userId = req.user.id;
-        const totalApplications = await Application.countDocuments({ applicant: userId });
-        const shortlisted = await Application.countDocuments({ applicant: userId, status: 'shortlisted' });
+        const [totalApplications, shortlisted, offered] = await Promise.all([
+            Application.countDocuments({ applicant: userId }),
+            Application.countDocuments({ applicant: userId, status: 'shortlisted' }),
+            Application.countDocuments({ applicant: userId, status: 'Offered' })
+        ]);
         const recentApplications = await Application.find({ applicant: userId })
-            .populate('employer', 'name email phone')
+            .populate({ path: 'jobId', options: { strictPopulate: false } })
+            .populate({ path: 'employer', select: 'name email phone', options: { strictPopulate: false } })
             .sort({ createdAt: -1 })
             .limit(10);
         res.status(200).json({
             user: req.user,
-            totalApplications,
-            shortlisted,
+            stats: {
+                totalApplications,
+                shortlisted,
+                offered,
+                savedJobs: 0
+            },
             recentApplications
         });
     }
@@ -47,8 +57,9 @@ export const getMyApplications = async (req, res) => {
         const userId = req.user.id;
         const applications = await Application.find({ applicant: userId })
             .populate({
-            path: 'job',
-            select: 'title companyName companyLogo location salary type'
+            path: 'jobId',
+            select: 'title companyName companyLogo location salary type designation description',
+            options: { strictPopulate: false }
         })
             .sort({ createdAt: -1 });
         res.status(200).json(applications);
@@ -59,9 +70,10 @@ export const getMyApplications = async (req, res) => {
 };
 export const createApplication = async (req, res) => {
     try {
-        const { fullName, dob, gender, city, image, jobtype, category, education, isFresher, experience, achievements, email, phone, whatsapp, salaryDemand } = req.body;
+        const { jobId, fullName, dob, gender, city, image, jobtype, category, education, isFresher, experience, achievements, email, phone, whatsapp, salaryDemand } = req.body;
         const createdApplication = await Application.create({
-            applicant: req.user._id,
+            applicant: req.user._id || req.user.id,
+            jobId,
             fullName,
             dob,
             email,
@@ -87,8 +99,9 @@ export const createApplication = async (req, res) => {
 export const getSingleApplication = async (req, res) => {
     try {
         const app = await Application.findById(req.params.id)
-            .populate("applicant", "name email")
-            .populate("employer", "name email phone");
+            .populate({ path: "applicant", select: "name email", options: { strictPopulate: false } })
+            .populate({ path: "jobId", options: { strictPopulate: false } })
+            .populate({ path: "employer", select: "name email phone", options: { strictPopulate: false } });
         if (!app)
             return res.status(404).json({ message: "Not found" });
         res.json(app);
@@ -155,8 +168,7 @@ export const sendJobOffer = async (req, res) => {
 export const deleteApplication = async (req, res) => {
     try {
         const { id } = req.params;
-        const ApplicationModel = Application;
-        const deletedApp = await ApplicationModel.findByIdAndDelete(id);
+        const deletedApp = await Application.findByIdAndDelete(id);
         if (!deletedApp) {
             return res.status(404).json({ message: "Application not found" });
         }
