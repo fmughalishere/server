@@ -5,6 +5,7 @@ import nodemailer from 'nodemailer';
 export const getEmployerApplicants = async (req: any, res: Response) => {
     try {
         const applicants = await (Application as any).find({} as any)
+            .populate('jobId')
             .sort({ createdAt: -1 });
 
         res.status(200).json(applicants);
@@ -18,7 +19,8 @@ export const updateApplicationStatus = async (req: any, res: Response) => {
         const { id } = req.params;
         const { status } = req.body;
         const application = await (Application as any).findByIdAndUpdate(id, { status }, { new: true } as any)
-            .populate('employer', 'name email phone');
+            .populate('employer', 'name email phone')
+            .populate('jobId');
             
         res.status(200).json(application);
     } catch (error) {
@@ -31,16 +33,22 @@ export const getJobseekerStats = async (req: any, res: Response) => {
         const userId = req.user.id;
         const totalApplications = await (Application as any).countDocuments({ applicant: userId } as any);
         const shortlisted = await (Application as any).countDocuments({ applicant: userId, status: 'shortlisted' } as any);
-        
+        const offered = await (Application as any).countDocuments({ applicant: userId, status: 'Offered' } as any); // Added offered counter
+
         const recentApplications = await (Application as any).find({ applicant: userId } as any)
+            .populate('jobId')
             .populate('employer', 'name email phone') 
             .sort({ createdAt: -1 })
             .limit(10);
 
         res.status(200).json({
             user: req.user,
-            totalApplications,
-            shortlisted,
+            stats: {
+                totalApplications,
+                shortlisted,
+                offered,
+                savedJobs: 0
+            },
             recentApplications
         });
     } catch (error) {
@@ -53,8 +61,8 @@ export const getMyApplications = async (req: any, res: any) => {
     const userId = req.user.id;
     const applications = await Application.find({ applicant: userId } as any)
       .populate({
-        path: 'job',
-        select: 'title companyName companyLogo location salary type'
+        path: 'jobId',
+        select: 'title companyName companyLogo location salary type designation description'
       })
       .sort({ createdAt: -1 });
 
@@ -67,12 +75,15 @@ export const getMyApplications = async (req: any, res: any) => {
 export const createApplication = async (req: any, res: any) => {
   try {
     const {
+      jobId,
       fullName, dob, gender, city, image, jobtype, 
       category, education, isFresher, experience, achievements,
       email, phone, whatsapp, salaryDemand
     } = req.body;
+    
     const createdApplication = await (Application as any).create({
-      applicant: req.user._id,
+      applicant: req.user._id || req.user.id,
+      jobId,
       fullName,
       dob,
       email,
@@ -101,6 +112,7 @@ export const getSingleApplication = async (req: any, res: any) => {
   try {
     const app = await (Application as any).findById(req.params.id)
       .populate("applicant", "name email")
+      .populate("jobId")
       .populate("employer", "name email phone");
 
     if (!app) return res.status(404).json({ message: "Not found" });
