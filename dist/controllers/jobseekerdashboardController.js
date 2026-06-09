@@ -9,7 +9,7 @@ export const getJobSeekerStats = async (req, res) => {
             Application.countDocuments({ applicant: userId, status: 'Offered' }),
             User.findById(userId).select('name email savedJobs'),
             Application.find({ applicant: userId })
-                .populate('job', 'title companyName location')
+                .populate('jobId', 'title companyName location')
                 .sort({ createdAt: -1 })
                 .limit(5)
         ]);
