@@ -25,7 +25,7 @@ const applicationSchema = new mongoose.Schema({
     skills: [{ type: String }],
     achievements: { type: String },
     isFresher: { type: Boolean, default: false },
-    yearsOfExperience: { type: Number },
+    yearsOfExperience: { type: String },
     salaryDemand: { type: String },
     experience: [experienceSchema],
     savedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
